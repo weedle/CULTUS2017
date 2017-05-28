@@ -41,7 +41,7 @@ public class CommonDefs {
         float spacing = cellSize * 1f;
         float x = (index % gridWidth) * spacing;
         float y = -1 * (index / gridWidth) * spacing;
-        return new Vector2(x, y) + new Vector2(-3,+5);
+		return new Vector2 (x, y);
     }
 
     public static void drawCell(int index)

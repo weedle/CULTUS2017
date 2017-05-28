@@ -73,15 +73,6 @@ public class Testing : MonoBehaviour {
 	void Update ()
     {
         units[activeUnit].handleUnit();
-        /*
-        if(Input.GetButton("Fire1"))
-        {
-            foreach(GameObject obj in GameObject.FindGameObjectsWithTag("cellLine"))
-            {
-                Destroy(obj);
-            }
-        }
-        */
         print(activeUnit + "    " + Input.GetAxis("Horizontal") + "   " + Input.GetAxis("Vertical"));
     }
 }
