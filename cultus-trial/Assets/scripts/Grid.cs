@@ -1,63 +1,79 @@
 ﻿using UnityEngine;
 using System;
 
+
 public class Grid : MonoBehaviour {
 	
-	Cell[][] gridLayout = new Cell[2][];
+	Cell[][] gridLayout = new Cell[3][];
 
-	// might contain more variables later
-	struct Cell {
-		bool occupied;
-		int tileType;
-
-		public Cell(int type){
-			tileType = type;
-			occupied = false;
-		}
-
-		public int getTileType() {
-			return tileType;
-		}
-	}
 
 	public Grid() {
 		Console.Write("So you made a grid...");
 	}
 
+	// might contain more variables later
+	struct Cell {
+		bool occupied;
+		int tileType;
+		Vector3 currentPos;
 
-	// NOTE: the current grid layout is hard-coded for now =.=
-	// (/* there's probably a better way to do this... ehue... )
-	public void makeGrid() {
-
-		gridLayout [0] = new Cell[4];
-		gridLayout [1] = new Cell[3];
-		gridLayout [2] = new Cell[2];
-
-		for (int r = 0; r < 2; r++) {
-			Cell[] currentRow = gridLayout [r];
-			for (int i = 0; i < currentRow.Length - 2; i++) {		// all cells in row 0 and 1 are "2"-tiles, except the laset
-				Cell currentCell = new Cell (2);
-				currentRow [i] = currentCell;
-			}
+		public Cell(int type, Vector3 position){
+			tileType = type;
+			occupied = false;
+			currentPos = position;
 		}
 
-		gridLayout [0] [4] = new Cell (1);							// cell rows 0 and 1 ends with a "1"-tile
-		gridLayout [1] [3] = new Cell (1);
-
-		for (int i = 0; i < gridLayout [2].Length - 1; i++) {		// all cells in row 2 are "1"-tiles
-			Cell currentCell = new Cell (1);
-			gridLayout [2] [i] = currentCell;
+		public int getTileType() {
+			return tileType;
+		}
+		public Vector3 getPos() {
+			return currentPos;
+		}
+		public void setPos(Vector3 position) {
+			currentPos = position;
 		}
 	}
 
 
 
+	// NOTE: the current grid layout is hard-coded for now =.=
+	public void makeGrid() {
+
+		gridLayout [0] = new Cell[5];
+		gridLayout [1] = new Cell[4];
+		gridLayout [2] = new Cell[3];
+
+		// NOTE: all cells in this grid uses '2-tiles' ( refer to labels in 'sprites' folder )
+		for (int r = 0; r < gridLayout.Length; r++) {
+			Cell[] currentRow = gridLayout [r];
+			float xVal = r * -0.5f;
+			float yVal = r * -0.25f;
+				
+			for (int i = 0; i < currentRow.Length; i++) {
+				Console.Write ("current pos values: x = " + xVal + " , y = " + yVal);
+				Cell currentCell = new Cell (1, new Vector3(xVal, yVal));
+				currentRow [i] = currentCell;
+				xVal += 0.5f;
+				yVal += -0.25f;
+			}
+		}
+	}
+		
+
 	public void loadGrid() {
 		makeGrid ();
 
-		for (int r = 0; r <= 2; r++) {
+		for (int r = 0; r < gridLayout.Length; r++) {
+			Cell[] currentRow = gridLayout [r];
 
-
+			for (int i = 0; i < currentRow.Length; i++) {
+				GameObject thisTile = (GameObject) Resources.Load ("1");
+				thisTile.transform.position = currentRow [i].getPos();
+				Instantiate (thisTile);
+			}
 		}
+
+
+
 	}
 }

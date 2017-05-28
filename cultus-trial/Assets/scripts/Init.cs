@@ -12,7 +12,7 @@ public class Init : MonoBehaviour {
 
 		// NOTE: making a new grid (ie. see below) is practically pointless because
 		//			it doesn't do anything  --> the current grid-layout is hard-coded
-		Grid emptyGrid = new Grid ();		
+		Grid emptyGrid = new Grid();	
 		emptyGrid.loadGrid ();
 
 	}

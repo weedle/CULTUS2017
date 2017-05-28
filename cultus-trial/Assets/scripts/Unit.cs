@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Unit : MonoBehaviour {
+public class Unit {
 
 	// Similar to K-san's code, this is the main 'UNIT' class
 	//	for the prototype --> will convert to abstract when
