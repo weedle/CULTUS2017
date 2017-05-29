@@ -63,10 +63,10 @@ public class Grid : MonoBehaviour {
 	public void loadGrid() {
 		makeGrid ();
 
-		for (int r = 0; r < gridLayout.Length; r++) {
+		for (int r = gridLayout.Length-1; r >= 0; r--) {
 			Cell[] currentRow = gridLayout [r];
 
-			for (int i = 0; i < currentRow.Length; i++) {
+			for (int i = currentRow.Length-1; i >= 0; i--) {
 				GameObject thisTile = (GameObject) Resources.Load ("1");
 				thisTile.transform.position = currentRow [i].getPos();
 				Instantiate (thisTile);
