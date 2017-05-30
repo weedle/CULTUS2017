@@ -6,15 +6,17 @@ public class Init : MonoBehaviour {
 
 	public GameObject mainChar;
 	public List<Unit> allUnits;
+    public GameObject grid;
 
 	void Start () {
 		float baseOrthoSize = Screen.height / 64.0f / 2.0f;
 		Camera.main.orthographicSize = baseOrthoSize;
 
 
-		// NOTE: making a new grid (ie. see below) is practically pointless because
-		//			it doesn't do anything  --> the current grid-layout is hard-coded
-		Grid emptyGrid = new Grid ();	
+        // NOTE: making a new grid (ie. see below) is practically pointless because
+        //			it doesn't do anything  --> the current grid-layout is hard-coded
+        grid = new GameObject("grid");
+        Grid emptyGrid = grid.AddComponent<Grid>();	
 		emptyGrid.makeGrid ();
 		emptyGrid.loadGrid ();
 
@@ -24,8 +26,9 @@ public class Init : MonoBehaviour {
 
 		// NOTE: all units created must be added to 'allUnits' list
 		allUnits = new List<Unit> ();
-		// NOTE: names of units aren't arbitrary; refer to naming scheme of prefabs in 'Resources' folder
-		Unit mainUnit1 = new Unit (startCell, Unit.Direction.LRight, "char", 007);
+        GameObject unit = new GameObject("char");
+        Unit mainUnit1 = unit.AddComponent<Unit>();
+        mainUnit1.setUnit(startCell, Unit.Direction.LRight, "flammen", 007);
 		allUnits.Add (mainUnit1);
 		displayAllUnits ();
 

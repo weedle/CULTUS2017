@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Unit : MonoBehaviour{
 
-	// Similar to K-san's code, this is the main 'UNIT' class
+	// Similar to K-sama's code, this is the main 'UNIT' class
 	//	for the prototype --> will convert to abstract when
 	// 	we have a clearer notion of a complete game >.<
 
@@ -19,8 +19,9 @@ public class Unit : MonoBehaviour{
 	float xCellOffset = -0.03f;
 	float yCellOffset = 0.12f;
 
-
-	public Unit(Grid.Cell cell, Direction dir, string name, int id) {
+    // setUnit sets the internal state of this unit, and then calls displayUnit
+    // to reflect that in the game screen
+	public void setUnit(Grid.Cell cell, Direction dir, string name, int id) {
 		updatePos (cell);
 		this.dir = dir;
 		unitName = name;
@@ -56,37 +57,33 @@ public class Unit : MonoBehaviour{
 	}
 		
 
-	// USAGE: to actually display this unit (ie. makes a GameObject)
+	// USAGE: to actually display this unit
 	public void displayUnit() {
-		string spriteName = getSprite ();
-		GameObject thisUnit = (GameObject)Resources.Load (spriteName);
-		thisUnit.transform.position = currentPos;
-		thisUnit.name = unitName + id;
-		Instantiate (thisUnit);
-	}
+        SpriteRenderer spriter;
 
+        // if this game object has a sprite renderer, retrieve it
+        // otherwise, generate one
+        if (gameObject.GetComponent<SpriteRenderer>() == null)
+        {
+            spriter = gameObject.AddComponent<SpriteRenderer>();
+
+            // set sorting order so it appears above the tiles
+            spriter.sortingOrder = 1;
+        }
+        else
+            spriter = gameObject.GetComponent<SpriteRenderer>();
+
+        transform.position = currentPos;
+        name = unitName + id;
+
+        // using SpriteHost to retrieve the image for this unit
+        spriter.sprite = GameObject.Find("GameLogic").GetComponent<SpriteHost>()
+            .getUnitSprite(unitName, dir);
+	}
 
 	public void moveUnit() {
 		
 
 
 	}
-
-	public string getSprite() {
-		switch (dir) {
-		case Direction.LLeft:
-			return unitName + "LL";
-		case Direction.LRight:
-			return unitName + "LR";
-		case Direction.ULeft:
-			return unitName + "UL";
-		case Direction.URight:
-			return unitName + "UR";
-		default:
-			Debug.Log ("Ya goofed on the unit direction, bruh, but we won't crash ya yet");
-			return unitName + "LR";
-		}
-	}
-
-
 }
