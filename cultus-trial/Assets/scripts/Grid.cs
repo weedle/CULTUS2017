@@ -12,15 +12,17 @@ public class Grid : MonoBehaviour {
 	}
 
 	// might contain more variables later
-	struct Cell {
-		bool occupied;
+	public struct Cell {
+		private bool isOccupied;
 		int tileType;
 		Vector3 currentPos;
+		Unit currentUnit;
 
-		public Cell(int type, Vector3 position){
+		public Cell(int type, Vector3 position, Unit unit){
 			tileType = type;
-			occupied = false;
+			isOccupied = false;
 			currentPos = position;
+			currentUnit = unit;
 		}
 
 		public int getTileType() {
@@ -31,6 +33,28 @@ public class Grid : MonoBehaviour {
 		}
 		public void setPos(Vector3 position) {
 			currentPos = position;
+		}
+		public bool getOccupied() {
+			return isOccupied;
+		}
+
+		// USAGE: when within the process of emptying a cell of
+		//			its unit
+		public void unoccupy() {
+			if (isOccupied) {
+				isOccupied = !isOccupied;
+				currentUnit = null;
+			}
+		}
+
+		// USAGE: when you want to set a new unit to an
+		//			EMPTY cell; changes will not proceed if
+		//			current cell is occupied
+		public void setUnit(Unit unit) {
+			if (!isOccupied) {
+				currentUnit = unit;
+				isOccupied = true;
+			}
 		}
 	}
 
@@ -69,11 +93,13 @@ public class Grid : MonoBehaviour {
 			for (int i = currentRow.Length-1; i >= 0; i--) {
 				GameObject thisTile = (GameObject) Resources.Load ("1");
 				thisTile.transform.position = currentRow [i].getPos();
+				thisTile.name = "tile" + r + i;
 				Instantiate (thisTile);
 			}
 		}
+	}
 
-
-
+	public Cell[][] getLayout() {
+		return gridLayout;
 	}
 }

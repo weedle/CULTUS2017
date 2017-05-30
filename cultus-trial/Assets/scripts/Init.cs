@@ -15,6 +15,10 @@ public class Init : MonoBehaviour {
 		Grid emptyGrid = new Grid();	
 		emptyGrid.loadGrid ();
 
+
+
+
+
 	}
 
 
