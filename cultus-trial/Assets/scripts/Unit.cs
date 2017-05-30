@@ -77,8 +77,7 @@ public class Unit : MonoBehaviour{
         name = unitName + id;
 
         // using SpriteHost to retrieve the image for this unit
-        spriter.sprite = GameObject.Find("GameLogic").GetComponent<SpriteHost>()
-            .getUnitSprite(unitName, dir);
+        spriter.sprite = (Sprite) Resources.Load<Sprite>("sprites/" + unitName + directionToString(dir));
 	}
 
 	public void moveUnit() {
@@ -86,4 +85,25 @@ public class Unit : MonoBehaviour{
 
 
 	}
+
+    public string directionToString(Direction dir)
+    {
+        string retStr = "";
+        switch(dir)
+        {
+            case Direction.LLeft:
+                retStr = "LL";
+                break;
+            case Direction.LRight:
+                retStr = "LR";
+                break;
+            case Direction.ULeft:
+                retStr = "UL";
+                break;
+            case Direction.URight:
+                retStr = "UR";
+                break;
+        }
+        return retStr;
+    }
 }
