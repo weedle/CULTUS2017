@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 public class Init : MonoBehaviour {
 
-	public GameObject mainChar;
 	public List<Unit> allUnits;
     public GameObject grid;
+	private Unit mainUnit1;
 
 	void Start () {
 		float baseOrthoSize = Screen.height / 64.0f / 2.0f;
@@ -27,7 +27,7 @@ public class Init : MonoBehaviour {
 		// NOTE: all units created must be added to 'allUnits' list
 		allUnits = new List<Unit> ();
         GameObject unit = new GameObject("char");
-        Unit mainUnit1 = unit.AddComponent<Unit>();
+        mainUnit1 = unit.AddComponent<Unit>();
         mainUnit1.setUnit(startCell, Unit.Direction.LRight, "flammen", 007);
 		allUnits.Add (mainUnit1);
 		displayAllUnits ();
@@ -44,6 +44,15 @@ public class Init : MonoBehaviour {
 		for (int i = 0; i < allUnits.Count; i++) {
 			allUnits [i].displayUnit ();
 		}
+	}
+
+
+	// NOTE: currently only perform movement updates on the 1 fixed unit
+	// 		 later we can modify this class to keep track of the
+	//			'currently-selected-unit' and only that one can move
+	//			at a particular time
+	void Update() {
+		mainUnit1.handleUnit ();
 	}
 
 

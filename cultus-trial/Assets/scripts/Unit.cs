@@ -11,7 +11,7 @@ public class Unit : MonoBehaviour{
 	string unitName;
 	int id;
 	Vector3 currentPos;
-	Direction dir;
+	Direction currentDir;
 	Grid.Cell currentCell;
 
 	// NOTE: values current chosen based on what seems to look
@@ -23,7 +23,7 @@ public class Unit : MonoBehaviour{
     // to reflect that in the game screen
 	public void setUnit(Grid.Cell cell, Direction dir, string name, int id) {
 		updatePos (cell);
-		this.dir = dir;
+		this.currentDir = dir;
 		unitName = name;
 		this.id = id;
 		cell.setUnit (this);
@@ -45,6 +45,7 @@ public class Unit : MonoBehaviour{
 		
 
 	// WARNING: newCell must be unoccupied for changes to proceed
+	// WARNING: this does NOT change the unit display !!!
 	// NOTE: might want to revisit this method in a later phase
 	public void changeCell(Grid.Cell newCell) {
 		if (!newCell.getOccupied ()) {
@@ -53,11 +54,11 @@ public class Unit : MonoBehaviour{
 			updatePos (newCell);
 			newCell.setUnit (this);		// does this work? 
 		}
-		displayUnit ();
 	}
 		
 
-	// USAGE: to actually display this unit
+	// USAGE: to actually display this unit on screen
+	// NOTE: maybe update this function to use the rendToDirection() method?
 	public void displayUnit() {
         SpriteRenderer spriter;
 
@@ -77,15 +78,75 @@ public class Unit : MonoBehaviour{
         name = unitName + id;
 
         // using SpriteHost to retrieve the image for this unit
-        spriter.sprite = (Sprite) Resources.Load<Sprite>("sprites/" + unitName + directionToString(dir));
+        spriter.sprite = (Sprite) Resources.Load<Sprite>("sprites/" + unitName + directionToString(currentDir));
 	}
 
-	public void moveUnit() {
+
+
+
+	// USAGE: handles unit movement corresponding to arrow-key input
+	// NOTE: There's probably a better way to write this XD 
+	public void handleUnit() {
+
+		float horizontal = Input.GetAxis ("Horizontal");
+		float vertical = Input.GetAxis ("Vertical");
+
+		// left, right arrows
+		if (horizontal != 0) {
+			
+			if (horizontal < 0) {		// left arrow = UL
+				if (currentDir == Direction.ULeft)
+					moveUnit (1);
+				else
+					rendToDirection (Direction.ULeft);
+				
+			} else {		// right arrow = LR
+				if (currentDir == Direction.LRight)
+					moveUnit (1);
+				else
+					rendToDirection (Direction.LRight);
+			}
+		}
+		// up, down arrows
+		if (vertical != 0) {
+			
+			if (vertical < 0) {			//down arrow = LL
+				if (currentDir == Direction.LLeft)
+					moveUnit (1);
+				else
+					rendToDirection (Direction.LLeft);
+
+			} else {		// up arrow = UR
+				if (currentDir == Direction.URight)
+					moveUnit (1);
+				else
+					rendToDirection (Direction.URight);
+			}
+		}
+	}
+
+
+	// WARNING: assumes current sprite already has a sprite renderer !!!
+	public void rendToDirection(Direction newDir) {
+		SpriteRenderer spriter = gameObject.GetComponent<SpriteRenderer> ();
+		spriter.sprite = (Sprite)Resources.Load<Sprite> ("sprites/" + unitName + directionToString (newDir)); 
+	}
 		
 
+	// USAGE: moves unit to the n-th cell in the current direction
+	public void moveUnit(int n) {
+		Grid currentGrid = GameObject.Find ("grid").GetComponent<Grid> ();
+		Grid.Cell destCell = currentGrid.nextCell (currentCell, currentDir, n);
+		Vector3 newPos = destCell.getPos ();
 
+		changeCell (destCell);
+		gameObject.transform.Translate (newPos);
 	}
 
+
+
+	// WARNING: will return an EMPTY STRING in the case that the
+	//				direction variable is screwed up 
     public string directionToString(Direction dir)
     {
         string retStr = "";

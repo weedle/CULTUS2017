@@ -17,13 +17,17 @@ public class Grid : MonoBehaviour {
 		int tileType;
 		Vector3 currentPos;
 		Unit currentUnit;
+		private int row;
+		private int col;
 
 		// NOTE: a NULL UNIT is assigned to Cell upon construction
-		public Cell(int type, Vector3 position){
+		public Cell(int type, Vector3 position, int row, int col){
 			tileType = type;
 			isOccupied = false;
 			currentPos = position;
 			currentUnit = null;
+			this.row = row;
+			this.col = col;
 		}
 
 		public int getTileType() {
@@ -38,6 +42,12 @@ public class Grid : MonoBehaviour {
 		public bool getOccupied() {
 			return isOccupied;
 		}
+		public int getRow() {
+			return row;
+		}
+		public int getCol() {
+			return col;
+		}
 
 		// USAGE: use within the process of emptying a cell of
 		//			its unit
@@ -49,6 +59,7 @@ public class Grid : MonoBehaviour {
 				isOccupied = !isOccupied;
 				currentUnit = null;
 			}
+		
 		}
 
 		// USAGE: when you want to set a new unit to an
@@ -61,6 +72,7 @@ public class Grid : MonoBehaviour {
 				isOccupied = true;
 			}
 		}
+			
 	}
 
 
@@ -80,7 +92,7 @@ public class Grid : MonoBehaviour {
 				
 			for (int i = 0; i < currentRow.Length; i++) {
 				Console.Write ("current pos values: x = " + xVal + " , y = " + yVal);
-				Cell currentCell = new Cell (1, new Vector3(xVal, yVal));
+				Cell currentCell = new Cell (1, new Vector3(xVal, yVal), r, i);
 				currentRow [i] = currentCell;
 				xVal += 0.5f;
 				yVal += -0.25f;
@@ -90,7 +102,6 @@ public class Grid : MonoBehaviour {
 		
 
 	public void loadGrid() {
-		// makeGrid ();
 
 		for (int r = gridLayout.Length-1; r >= 0; r--) {
 			Cell[] currentRow = gridLayout [r];
@@ -104,6 +115,8 @@ public class Grid : MonoBehaviour {
 		}
 	}
 		
+
+
 	// RETURNS: a crude estimate of the center of this grid layout
 	// USAGE: can use this to focus the camera on the centre cell
 	// NOTE: there's a probably a better way of doing this !!!
@@ -121,5 +134,39 @@ public class Grid : MonoBehaviour {
 	public Cell[][] getLayout() {
 		return gridLayout;
 	}
+
+	// USAGE: returns the n-th cell from current cell in the specified direction
+	// NOTE: currently just used by the Unit class for movement process
+	public Cell nextCell(Cell currentCell, Unit.Direction dir, int n) {
+
+		int row = currentCell.getRow ();
+		int col = currentCell.getCol ();
+		Cell nthCell = currentCell;			// returns currentCell if all else fails
+		int min = 0;
+
+		switch (dir) {
+		case Unit.Direction.LLeft:
+			min = Mathf.Min (gridLayout.GetLength (0) - 1, row + n);
+			nthCell = gridLayout [min] [col];
+			break;
+		case Unit.Direction.URight:
+			min = Mathf.Min (0, row - n);
+			nthCell = gridLayout [min] [col];
+			break;
+
+		case Unit.Direction.ULeft:
+			min = Mathf.Min (0, col - n);
+			nthCell = gridLayout [row] [min];
+			break;
+		case Unit.Direction.LRight:
+			min = Mathf.Min (gridLayout [row].Length - 1, col + n);
+			nthCell = gridLayout [row] [min];
+			break;
+		}
+
+		return nthCell;
+	}
+
+
 
 }
