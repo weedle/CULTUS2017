@@ -52,7 +52,7 @@ public class Unit : MonoBehaviour{
 			currentCell.unoccupy ();
 			currentCell = newCell;
 			updatePos (newCell);
-			newCell.setUnit (this);		// does this work? 
+			newCell.setUnit (this);		// does this work?
 		}
 	}
 		
@@ -115,43 +115,6 @@ public class Unit : MonoBehaviour{
             else
                 rendToDirection(Direction.LLeft);
         }
-        /*
-		float horizontal = Input.GetAxis ("Horizontal");
-		float vertical = Input.GetAxis ("Vertical");
-
-		// left, right arrows
-		if (horizontal != 0) {
-            print("h: " + horizontal);
-			if (horizontal < 0) {		// left arrow = UL
-				if (currentDir == Direction.ULeft)
-					moveUnit (1);
-				else
-					rendToDirection (Direction.ULeft);
-				
-			} else {		// right arrow = LR
-				if (currentDir == Direction.LRight)
-					moveUnit (1);
-				else
-					rendToDirection (Direction.LRight);
-			}
-		}
-		// up, down arrows
-		if (vertical != 0) {
-            print("v: " + vertical);
-			if (vertical < 0) {			//down arrow = LL
-				if (currentDir == Direction.LLeft)
-					moveUnit (1);
-				else
-					rendToDirection (Direction.LLeft);
-
-			} else {		// up arrow = UR
-				if (currentDir == Direction.URight)
-					moveUnit (1);
-				else
-					rendToDirection (Direction.URight);
-			}
-		}
-        */
     }
 
 
@@ -170,7 +133,9 @@ public class Unit : MonoBehaviour{
 		Vector3 newPos = destCell.getPos ();
 
 		changeCell (destCell);
-		gameObject.transform.position = newPos;
+		// this works because changeCell() also updates the currentPos to the destination
+		//	position, for better or for worst
+		gameObject.transform.position = currentPos;	
 	}
 
 

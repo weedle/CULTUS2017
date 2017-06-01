@@ -141,26 +141,26 @@ public class Grid : MonoBehaviour {
 		int row = currentCell.getRow ();
 		int col = currentCell.getCol ();
 		Cell nthCell = currentCell;			// returns currentCell if all else fails
-		int min = 0;
+		int val = 0;
 
 		switch (dir)
         {
             case Unit.Direction.LLeft:
-                min = Mathf.Min (gridLayout.GetLength (0) - 1, row + n);
-                nthCell = gridLayout [min] [col];
+                val = Mathf.Min (gridLayout.GetLength (0) - 1, row + n);
+                nthCell = gridLayout [val] [col];
                 break;
             case Unit.Direction.URight:
-                min = Mathf.Min (0, row - n);
-                nthCell = gridLayout [min] [col];
+				val = Mathf.Max(0, row - n);
+                nthCell = gridLayout [val] [col];
                 break;
 
             case Unit.Direction.ULeft:
-                min = Mathf.Min (0, col - n);
-                nthCell = gridLayout [row] [min];
+				val = Mathf.Max(0, col - n);
+                nthCell = gridLayout [row] [val];
                 break;
             case Unit.Direction.LRight:
-                min = Mathf.Min (gridLayout [row].Length - 1, col + n);
-                nthCell = gridLayout [row] [min];
+                val = Mathf.Min (gridLayout [row].Length - 1, col + n);
+                nthCell = gridLayout [row] [val];
                 break;
         }
 
