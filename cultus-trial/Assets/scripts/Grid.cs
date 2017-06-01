@@ -83,7 +83,6 @@ public class Grid : MonoBehaviour {
 		gridLayout [0] = new Cell[5];
 		gridLayout [1] = new Cell[4];
 		gridLayout [2] = new Cell[3];
-
 		// NOTE: all cells in this grid uses '2-tiles' ( refer to labels in 'sprites' folder )
 		for (int r = 0; r < gridLayout.Length; r++) {
 			Cell[] currentRow = gridLayout [r];
@@ -91,7 +90,7 @@ public class Grid : MonoBehaviour {
 			float yVal = r * -0.25f;
 				
 			for (int i = 0; i < currentRow.Length; i++) {
-				Console.Write ("current pos values: x = " + xVal + " , y = " + yVal);
+				//print("current pos values: x = " + xVal + " , y = " + yVal);
 				Cell currentCell = new Cell (1, new Vector3(xVal, yVal), r, i);
 				currentRow [i] = currentCell;
 				xVal += 0.5f;
@@ -144,25 +143,26 @@ public class Grid : MonoBehaviour {
 		Cell nthCell = currentCell;			// returns currentCell if all else fails
 		int min = 0;
 
-		switch (dir) {
-		case Unit.Direction.LLeft:
-			min = Mathf.Min (gridLayout.GetLength (0) - 1, row + n);
-			nthCell = gridLayout [min] [col];
-			break;
-		case Unit.Direction.URight:
-			min = Mathf.Min (0, row - n);
-			nthCell = gridLayout [min] [col];
-			break;
+		switch (dir)
+        {
+            case Unit.Direction.LLeft:
+                min = Mathf.Min (gridLayout.GetLength (0) - 1, row + n);
+                nthCell = gridLayout [min] [col];
+                break;
+            case Unit.Direction.URight:
+                min = Mathf.Min (0, row - n);
+                nthCell = gridLayout [min] [col];
+                break;
 
-		case Unit.Direction.ULeft:
-			min = Mathf.Min (0, col - n);
-			nthCell = gridLayout [row] [min];
-			break;
-		case Unit.Direction.LRight:
-			min = Mathf.Min (gridLayout [row].Length - 1, col + n);
-			nthCell = gridLayout [row] [min];
-			break;
-		}
+            case Unit.Direction.ULeft:
+                min = Mathf.Min (0, col - n);
+                nthCell = gridLayout [row] [min];
+                break;
+            case Unit.Direction.LRight:
+                min = Mathf.Min (gridLayout [row].Length - 1, col + n);
+                nthCell = gridLayout [row] [min];
+                break;
+        }
 
 		return nthCell;
 	}

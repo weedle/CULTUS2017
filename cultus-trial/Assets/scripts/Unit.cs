@@ -87,13 +87,41 @@ public class Unit : MonoBehaviour{
 	// USAGE: handles unit movement corresponding to arrow-key input
 	// NOTE: There's probably a better way to write this XD 
 	public void handleUnit() {
-
+        if(Input.GetKeyDown(KeyCode.RightArrow))
+        {   // right arrow = LR
+            if (currentDir == Direction.LRight)
+                moveUnit(1);
+            else
+                rendToDirection(Direction.LRight);
+        }
+        else if(Input.GetKeyDown(KeyCode.LeftArrow))
+        {   // left arrow = UL
+            if (currentDir == Direction.ULeft)
+                moveUnit(1);
+            else
+                rendToDirection(Direction.ULeft);
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {   // up arrow = UR
+            if (currentDir == Direction.URight)
+                moveUnit(1);
+            else
+                rendToDirection(Direction.URight);
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {   //down arrow = LL
+            if (currentDir == Direction.LLeft)
+                moveUnit(1);
+            else
+                rendToDirection(Direction.LLeft);
+        }
+        /*
 		float horizontal = Input.GetAxis ("Horizontal");
 		float vertical = Input.GetAxis ("Vertical");
 
 		// left, right arrows
 		if (horizontal != 0) {
-			
+            print("h: " + horizontal);
 			if (horizontal < 0) {		// left arrow = UL
 				if (currentDir == Direction.ULeft)
 					moveUnit (1);
@@ -109,7 +137,7 @@ public class Unit : MonoBehaviour{
 		}
 		// up, down arrows
 		if (vertical != 0) {
-			
+            print("v: " + vertical);
 			if (vertical < 0) {			//down arrow = LL
 				if (currentDir == Direction.LLeft)
 					moveUnit (1);
@@ -123,13 +151,15 @@ public class Unit : MonoBehaviour{
 					rendToDirection (Direction.URight);
 			}
 		}
-	}
+        */
+    }
 
 
 	// WARNING: assumes current sprite already has a sprite renderer !!!
 	public void rendToDirection(Direction newDir) {
 		SpriteRenderer spriter = gameObject.GetComponent<SpriteRenderer> ();
-		spriter.sprite = (Sprite)Resources.Load<Sprite> ("sprites/" + unitName + directionToString (newDir)); 
+		spriter.sprite = (Sprite)Resources.Load<Sprite> ("sprites/" + unitName + directionToString (newDir));
+        currentDir = newDir;
 	}
 		
 
@@ -140,7 +170,7 @@ public class Unit : MonoBehaviour{
 		Vector3 newPos = destCell.getPos ();
 
 		changeCell (destCell);
-		gameObject.transform.Translate (newPos);
+		gameObject.transform.position = newPos;
 	}
 
 
