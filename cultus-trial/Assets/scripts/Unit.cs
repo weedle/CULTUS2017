@@ -12,7 +12,7 @@ public class Unit : MonoBehaviour{
 	int id;
 	Vector3 currentPos;
 	Direction currentDir;
-	Grid.Cell currentCell;
+	Cell currentCell;
 
 	// NOTE: values current chosen based on what seems to look
 	//			right to J-san
@@ -21,7 +21,7 @@ public class Unit : MonoBehaviour{
 
     // setUnit sets the internal state of this unit, and then calls displayUnit
     // to reflect that in the game screen
-	public void setUnit(Grid.Cell cell, Direction dir, string name, int id) {
+	public void setUnit(Cell cell, Direction dir, string name, int id) {
 		updatePos (cell);
 		this.currentDir = dir;
 		unitName = name;
@@ -38,7 +38,7 @@ public class Unit : MonoBehaviour{
 
 	// WARNING: updatePos does NOT display the updated unit, despite
 	//				having changed the position internally
-	public void updatePos(Grid.Cell updatedCell) {
+	public void updatePos(Cell updatedCell) {
 		currentPos = new Vector3 (updatedCell.getPos ().x + xCellOffset, 
 			updatedCell.getPos ().y + yCellOffset);
 	}
@@ -47,7 +47,7 @@ public class Unit : MonoBehaviour{
 	// WARNING: newCell must be unoccupied for changes to proceed
 	// WARNING: this does NOT change the unit display !!!
 	// NOTE: might want to revisit this method in a later phase
-	public void changeCell(Grid.Cell newCell) {
+	public void changeCell(Cell newCell) {
 		if (!newCell.getOccupied ()) {
 			currentCell.unoccupy ();
 			currentCell = newCell;
@@ -129,7 +129,7 @@ public class Unit : MonoBehaviour{
 	// USAGE: moves unit to the n-th cell in the current direction
 	public void moveUnit(int n) {
 		Grid currentGrid = GameObject.Find ("grid").GetComponent<Grid> ();
-		Grid.Cell destCell = currentGrid.nextCell (currentCell, currentDir, n);
+		Cell destCell = currentGrid.nextCell (currentCell, currentDir, n);
 		Vector3 newPos = destCell.getPos ();
 
 		changeCell (destCell);

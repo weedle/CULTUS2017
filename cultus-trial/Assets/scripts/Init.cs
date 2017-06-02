@@ -20,8 +20,8 @@ public class Init : MonoBehaviour {
 		emptyGrid.makeGrid ();
 		emptyGrid.loadGrid ();
 
-		Grid.Cell[][] thisGrid = emptyGrid.getLayout ();
-		Grid.Cell startCell = thisGrid [0] [0];
+		Cell[][] thisGrid = emptyGrid.getLayout ();
+		Cell startCell = thisGrid [0] [0];
 
 
 		// NOTE: all units created must be added to 'allUnits' list
