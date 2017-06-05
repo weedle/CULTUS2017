@@ -69,7 +69,7 @@ public class Unit : MonoBehaviour{
             spriter = gameObject.AddComponent<SpriteRenderer>();
 
             // set sorting order so it appears above the tiles
-            spriter.sortingOrder = 1;
+            spriter.sortingOrder = 2;
         }
         else
             spriter = gameObject.GetComponent<SpriteRenderer>();
@@ -124,9 +124,10 @@ public class Unit : MonoBehaviour{
 		spriter.sprite = (Sprite)Resources.Load<Sprite> ("sprites/" + unitName + directionToString (newDir));
         currentDir = newDir;
 	}
-		
 
-	// USAGE: moves unit to the n-th cell in the current direction
+
+    // USAGE: moves unit to the n-th cell in the current direction
+    public int dist = 6;
 	public void moveUnit(int n) {
 		Grid currentGrid = GameObject.Find ("grid").GetComponent<Grid> ();
 		Cell destCell = currentGrid.nextCell (currentCell, currentDir, n);
@@ -135,7 +136,20 @@ public class Unit : MonoBehaviour{
 		changeCell (destCell);
 		// this works because changeCell() also updates the currentPos to the destination
 		//	position, for better or for worst
-		gameObject.transform.position = currentPos;	
+		gameObject.transform.position = currentPos;
+        GameObject.Find("gridOverlay").GetComponent<Grid>().hideAll();
+        HashSet<Cell> cells = currentGrid.getCellsWithinRange(destCell, dist);
+        dist--;
+        if (dist <= 0)
+            dist = 8;
+        Cell[,] overlay = GameObject.Find("gridOverlay").GetComponent<Grid>().getLayout();
+        foreach (Cell cell in cells)
+        {
+            overlay[cell.getRow(), cell.getCol()].cellObject.GetComponent<SpriteRenderer>()
+                .enabled = true;
+            //cell.cellObject.GetComponent<SpriteRenderer>()
+            //    .enabled = true;
+        }
 	}
 
 

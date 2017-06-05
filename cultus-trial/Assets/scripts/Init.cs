@@ -6,7 +6,8 @@ public class Init : MonoBehaviour {
 
 	public List<Unit> allUnits;
     public GameObject grid;
-	private Unit mainUnit1;
+    public GameObject gridOverlay;
+    private Unit mainUnit1;
 
 	void Start () {
 		float baseOrthoSize = Screen.height / 64.0f / 2.0f;
@@ -16,12 +17,19 @@ public class Init : MonoBehaviour {
         // NOTE: making a new grid (ie. see below) is practically pointless because
         //			it doesn't do anything  --> the current grid-layout is hard-coded
         grid = new GameObject("grid");
-        Grid emptyGrid = grid.AddComponent<Grid>();	
-		emptyGrid.makeGrid ();
-		emptyGrid.loadGrid ();
+        Grid emptyGrid = grid.AddComponent<Grid>();
+        emptyGrid.isVirtual = false;
+        emptyGrid.makeGrid();
+        emptyGrid.loadGrid();
 
-		Cell[][] thisGrid = emptyGrid.getLayout ();
-		Cell startCell = thisGrid [0] [0];
+        gridOverlay = new GameObject("gridOverlay");
+        Grid overlayGrid = gridOverlay.AddComponent<Grid>();
+        overlayGrid.isVirtual = true;
+        overlayGrid.makeGrid();
+        overlayGrid.loadGrid();
+
+        Cell[,] thisGrid = emptyGrid.getLayout ();
+		Cell startCell = thisGrid [0,0];
 
 
 		// NOTE: all units created must be added to 'allUnits' list
