@@ -36,7 +36,8 @@ public class Init : MonoBehaviour {
 		allUnits = new List<Unit> ();
         GameObject unit = new GameObject("char");
         mainUnit1 = unit.AddComponent<Unit>();
-        mainUnit1.setUnit(startCell, Unit.Direction.LRight, "flammen", 007);
+        unit.AddComponent<ManualController>();
+        mainUnit1.setUnit(startCell, Unit.Direction.LRight, Unit.Faction.Player, "flammen", 007);
 		allUnits.Add (mainUnit1);
 		displayAllUnits ();
 
@@ -45,7 +46,9 @@ public class Init : MonoBehaviour {
 		Vector3 cameraPos = emptyGrid.getCentrePos ();
 		cameraPos.z = -10; 
 		Camera.main.transform.position = cameraPos;
-	}
+
+        //mainUnit1.handleUnit();
+    }
 
 
 	public void displayAllUnits() {
@@ -60,7 +63,8 @@ public class Init : MonoBehaviour {
 	//			'currently-selected-unit' and only that one can move
 	//			at a particular time
 	void Update() {
-		mainUnit1.handleUnit ();
+        if (Input.GetButtonDown("Fire2"))
+            mainUnit1.handleUnit();
 	}
 
 

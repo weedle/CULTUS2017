@@ -10,9 +10,12 @@ public class Unit : MonoBehaviour{
 
 	string unitName;
 	int id;
-	Vector3 currentPos;
-	Direction currentDir;
-	Cell currentCell;
+    public Faction unitFaction;
+	public Vector3 currentPos;
+    public Direction currentDir;
+    public Cell currentCell;
+    public static int moveLimit = 6;
+    public int movesRemaining = 6;
 
 	// NOTE: values current chosen based on what seems to look
 	//			right to J-san
@@ -21,10 +24,11 @@ public class Unit : MonoBehaviour{
 
     // setUnit sets the internal state of this unit, and then calls displayUnit
     // to reflect that in the game screen
-	public void setUnit(Cell cell, Direction dir, string name, int id) {
+	public void setUnit(Cell cell, Direction dir, Faction faction, string name, int id) {
 		updatePos (cell);
 		this.currentDir = dir;
 		unitName = name;
+        unitFaction = faction;
 		this.id = id;
 		cell.setUnit (this);
 		currentCell = cell;
@@ -35,7 +39,28 @@ public class Unit : MonoBehaviour{
 		LLeft, LRight, ULeft, URight
 	}
 
-
+    // Factions
+    // Player: under player control
+    //      ie; a player unit
+    // Allied: under AI control, but allied with Player
+    //      seeks out and attacks Enemy units, IndepEnemy if nearby
+    // Passive: never attacks, flees if attacked
+    // IndepAlly: attacks nearby enemies, otherwise wanders
+    // IndepEnemy: attacks nearby players, otherwise wanders
+    // IndepNeutral: wanders, changes to IndepAlly/IndepEnemy if attacked
+    //      eg; a wolf that can be angered by player or enemy units
+    //      why not change to Allied or Enemy? Because if the goal of a mission
+    //      is to, for example, defeat all enemies, angered mobs shouldn't count
+    //  IndepRogue: attacks all nearby nonIndepRogue units
+    //      eg; hungry pack of wolves
+    // EnemyLawful: seeks out and attacks Player and Allied units
+    // EnemyChaotic: seeks out and attacks all nonEnemy units
+    
+    // I know it seems complicated, but if you abstract out the targets, it's
+    // really the same
+    public enum Faction {
+        Player, Allied, Enemy, IndepPassive, IndepRogue, IndepNeutral
+    }
 	// WARNING: updatePos does NOT display the updated unit, despite
 	//				having changed the position internally
 	public void updatePos(Cell updatedCell) {
@@ -81,53 +106,26 @@ public class Unit : MonoBehaviour{
         spriter.sprite = (Sprite) Resources.Load<Sprite>("sprites/" + unitName + directionToString(currentDir));
 	}
 
-
-
-
-	// USAGE: handles unit movement corresponding to arrow-key input
-	// NOTE: There's probably a better way to write this XD 
-	public void handleUnit() {
-        if(Input.GetKeyDown(KeyCode.RightArrow))
-        {   // right arrow = LR
-            if (currentDir == Direction.LRight)
-                moveUnit(1);
-            else
-                rendToDirection(Direction.LRight);
-        }
-        else if(Input.GetKeyDown(KeyCode.LeftArrow))
-        {   // left arrow = UL
-            if (currentDir == Direction.ULeft)
-                moveUnit(1);
-            else
-                rendToDirection(Direction.ULeft);
-        }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
-        {   // up arrow = UR
-            if (currentDir == Direction.URight)
-                moveUnit(1);
-            else
-                rendToDirection(Direction.URight);
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {   //down arrow = LL
-            if (currentDir == Direction.LLeft)
-                moveUnit(1);
-            else
-                rendToDirection(Direction.LLeft);
-        }
+	public void handleUnit()
+    {
+        movesRemaining = moveLimit;
+        displayReachableCells();
+        IntfController controller = GetComponent<IntfController>();
+        if (controller != null)
+            controller.handleTurn();
     }
 
-
-	// WARNING: assumes current sprite already has a sprite renderer !!!
+    
 	public void rendToDirection(Direction newDir) {
 		SpriteRenderer spriter = gameObject.GetComponent<SpriteRenderer> ();
+        if (spriter == null)
+            spriter = gameObject.AddComponent<SpriteRenderer>();
 		spriter.sprite = (Sprite)Resources.Load<Sprite> ("sprites/" + unitName + directionToString (newDir));
         currentDir = newDir;
 	}
 
 
     // USAGE: moves unit to the n-th cell in the current direction
-    public int dist = 6;
 	public void moveUnit(int n) {
 		Grid currentGrid = GameObject.Find ("grid").GetComponent<Grid> ();
 		Cell destCell = currentGrid.nextCell (currentCell, currentDir, n);
@@ -138,24 +136,26 @@ public class Unit : MonoBehaviour{
 		//	position, for better or for worst
 		gameObject.transform.position = currentPos;
         GameObject.Find("gridOverlay").GetComponent<Grid>().hideAll();
-        HashSet<Cell> cells = currentGrid.getCellsWithinRange(destCell, dist);
-        dist--;
-        if (dist <= 0)
-            dist = 8;
+        movesRemaining -= n;
+        displayReachableCells();
+	}
+
+    private void displayReachableCells()
+    {
+        Grid currentGrid = GameObject.Find("grid").GetComponent<Grid>();
+        HashSet<Cell> cells = currentGrid.getCellsWithinRange(currentCell, movesRemaining);
         Cell[,] overlay = GameObject.Find("gridOverlay").GetComponent<Grid>().getLayout();
         foreach (Cell cell in cells)
         {
             overlay[cell.getRow(), cell.getCol()].cellObject.GetComponent<SpriteRenderer>()
                 .enabled = true;
-            //cell.cellObject.GetComponent<SpriteRenderer>()
-            //    .enabled = true;
         }
-	}
+    }
 
 
 
-	// WARNING: will return an EMPTY STRING in the case that the
-	//				direction variable is screwed up 
+    // WARNING: will return an EMPTY STRING in the case that the
+    //				direction variable is screwed up 
     public string directionToString(Direction dir)
     {
         string retStr = "";
@@ -175,5 +175,16 @@ public class Unit : MonoBehaviour{
                 break;
         }
         return retStr;
+    }
+
+    public List<string> getAvailableActions()
+    {
+        IntfActionModule[]actions = GetComponents<IntfActionModule>();
+        List<string> actionStrings = new List<string>();
+        foreach(IntfActionModule action in actions)
+        {
+            actionStrings.Add(action.getActionName());
+        }
+        return actionStrings;
     }
 }
