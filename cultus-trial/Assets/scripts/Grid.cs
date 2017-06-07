@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Grid : MonoBehaviour {
     public bool isVirtual = false;
     Cell[,] gridLayout = new Cell[5, 10];
-
+    GameObject[,] cellObjects = new GameObject[5, 10];
 
 	public Grid() {
 		Console.Write("Huh, so you made a new grid, I think...");
@@ -34,21 +34,26 @@ public class Grid : MonoBehaviour {
 		for (int r = gridLayout.GetLength(0) - 1; r >= 0; r--) {
 			for (int i = gridLayout.GetLength(1) - 1; i >= 0; i--) {
                 GameObject thisTile = new GameObject();
-                gridLayout[r, i].cellObject = thisTile;
+                cellObjects[r, i] = thisTile;
                 SpriteRenderer spriter = thisTile.AddComponent<SpriteRenderer>();
                 spriter.sprite = (Sprite)Resources.Load<Sprite>("sprites/01");
-                thisTile.transform.position = gridLayout[r,i].getPos() - (r + i) * new Vector3(0,0,0.0001f);
+                thisTile.transform.position = gridLayout[r, i].getPos();// - (r + i) * new Vector3(0,0,0.0001f);
                 thisTile.name = "tile(" + r + "," + i + ")";
                 if (isVirtual)
                 {
                     spriter.sprite = (Sprite)Resources.Load<Sprite>("sprites/movementMarker");
-                    spriter.sortingOrder = 1;
                     thisTile.name = "tileMovementMarker(" + r + "," + i + ")";
                     spriter.enabled = false;
+                    spriter.sortingLayerName = "Overlay";
                 }
+                else
+                {
+                    spriter.sortingLayerName = "Tiles";
+                }
+                spriter.sortingOrder = r + i;
                 //Instantiate (thisTile);
-			}
-		}
+            }
+        }
 	}
 
     public void hideAll()
@@ -58,7 +63,7 @@ public class Grid : MonoBehaviour {
         {
             for (int i = gridLayout.GetLength(1) - 1; i >= 0; i--)
             {
-                gridLayout[r, i].cellObject.GetComponent<SpriteRenderer>().enabled = false;
+                cellObjects[r, i].GetComponent<SpriteRenderer>().enabled = false;
             }
         }
     }
@@ -138,5 +143,18 @@ public class Grid : MonoBehaviour {
             cells.UnionWith(addCellsWithinRangeRecursive(cell, n - 1, cells));
         }
         return cells;
+    }
+
+    public void highlightCells(HashSet<Cell> cells, Sprite sprite)
+    {
+        if(isVirtual)
+        {
+            foreach (Cell cell in cells)
+            {
+                SpriteRenderer spriter = cellObjects[cell.getRow(), cell.getCol()].GetComponent<SpriteRenderer>();
+                spriter.sprite = sprite;
+                spriter.enabled = true;
+            }
+        }
     }
 }

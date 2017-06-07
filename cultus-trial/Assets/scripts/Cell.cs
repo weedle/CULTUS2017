@@ -8,7 +8,6 @@ public class Cell {
     Unit currentUnit;
     private int row;
     private int col;
-    public GameObject cellObject;
     
     // NOTE: a NULL UNIT is assigned to Cell upon construction
     public Cell(int type, Vector3 position, int row, int col)

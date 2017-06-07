@@ -17,7 +17,7 @@ public class Unit : MonoBehaviour{
     public static int moveLimit = 6;
     public int movesRemaining = 6;
     public bool done = true;
-
+    public int health = 100;
 	// NOTE: values current chosen based on what seems to look
 	//			right to J-san
 	float xCellOffset = -0.03f;
@@ -95,7 +95,7 @@ public class Unit : MonoBehaviour{
             spriter = gameObject.AddComponent<SpriteRenderer>();
 
             // set sorting order so it appears above the tiles
-            spriter.sortingOrder = 2;
+            spriter.sortingLayerName = "Units";
         }
         else
             spriter = gameObject.GetComponent<SpriteRenderer>();
@@ -145,16 +145,12 @@ public class Unit : MonoBehaviour{
 
     private void displayReachableCells()
     {
-        Grid currentGrid = GameObject.Find("grid").GetComponent<Grid>();
+        Grid currentGrid = GameObject.Find("gridOverlay").GetComponent<Grid>();
         HashSet<Cell> cells = currentGrid.getCellsWithinRange(currentCell, movesRemaining);
-        Cell[,] overlay = GameObject.Find("gridOverlay").GetComponent<Grid>().getLayout();
-        foreach (Cell cell in cells)
-        {
-            overlay[cell.getRow(), cell.getCol()].cellObject.GetComponent<SpriteRenderer>()
-                .enabled = true;
-        }
-    }
+        GameObject.Find("gridOverlay").GetComponent<Grid>()
+            .highlightCells(cells, (Sprite)Resources.Load<Sprite>("sprites/movementMarker"));
 
+    }
 
 
     // WARNING: will return an EMPTY STRING in the case that the
