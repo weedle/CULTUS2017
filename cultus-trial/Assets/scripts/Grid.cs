@@ -37,7 +37,7 @@ public class Grid : MonoBehaviour {
                 gridLayout[r, i].cellObject = thisTile;
                 SpriteRenderer spriter = thisTile.AddComponent<SpriteRenderer>();
                 spriter.sprite = (Sprite)Resources.Load<Sprite>("sprites/01");
-                thisTile.transform.position = gridLayout[r,i].getPos();
+                thisTile.transform.position = gridLayout[r,i].getPos() - (r + i) * new Vector3(0,0,0.0001f);
                 thisTile.name = "tile(" + r + "," + i + ")";
                 if (isVirtual)
                 {
