@@ -7,7 +7,6 @@ public class Init : MonoBehaviour {
 	public List<Unit> allUnits;
     public GameObject grid;
     public GameObject gridOverlay;
-    private Unit mainUnit1;
 
 	void Start () {
 		float baseOrthoSize = Screen.height / 64.0f / 2.0f;
@@ -34,20 +33,25 @@ public class Init : MonoBehaviour {
 
 		// NOTE: all units created must be added to 'allUnits' list
 		allUnits = new List<Unit> ();
-        GameObject unit = new GameObject("char");
-        mainUnit1 = unit.AddComponent<Unit>();
-        unit.AddComponent<ManualController>();
-        mainUnit1.setUnit(startCell, Unit.Direction.LRight, Unit.Faction.Player, "flammen", 007);
-		allUnits.Add (mainUnit1);
-		displayAllUnits ();
+        GameObject unit1 = new GameObject("char");
+        Unit unitComp1 = unit1.AddComponent<Unit>();
+        unit1.AddComponent<ManualController>();
+        unitComp1.setUnit(startCell, Unit.Direction.LRight, Unit.Faction.Player, "flammen", 007);
+
+        GameObject unit2 = new GameObject("char2");
+        Unit unitComp2 = unit2.AddComponent<Unit>();
+        unit2.AddComponent<ManualController>();
+        unitComp2.setUnit(thisGrid[2,2], Unit.Direction.ULeft, Unit.Faction.Player, "flammen", 008);
+
+        allUnits.Add(unitComp1);
+        allUnits.Add(unitComp2);
+        displayAllUnits ();
 
 
 		// zooms into roughly the center cell of grid layout
 		Vector3 cameraPos = emptyGrid.getCentrePos ();
 		cameraPos.z = -10; 
 		Camera.main.transform.position = cameraPos;
-
-        //mainUnit1.handleUnit();
     }
 
 
@@ -58,14 +62,28 @@ public class Init : MonoBehaviour {
 	}
 
 
-	// NOTE: currently only perform movement updates on the 1 fixed unit
-	// 		 later we can modify this class to keep track of the
-	//			'currently-selected-unit' and only that one can move
-	//			at a particular time
-	void Update() {
-        if (Input.GetButtonDown("Fire2"))
-            mainUnit1.handleUnit();
-	}
+    // NOTE: currently only perform movement updates on the 1 fixed unit
+    // 		 later we can modify this class to keep track of the
+    //			'currently-selected-unit' and only that one can move
+    //			at a particular time
+    int unitIndex = 0;
+    bool inProgress = false;
+    void Update()
+    {
+        if (inProgress == false)
+        {
+            allUnits[unitIndex].handleUnit();
+            inProgress = true;
+        }
+
+        if (allUnits[unitIndex].done == true)
+        {
+            unitIndex++;
+            if (unitIndex >= 2)
+                unitIndex = 0;
+            inProgress = false;
+        }
+    }
 
 
 

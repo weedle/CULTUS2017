@@ -16,6 +16,7 @@ public class Unit : MonoBehaviour{
     public Cell currentCell;
     public static int moveLimit = 6;
     public int movesRemaining = 6;
+    public bool done = true;
 
 	// NOTE: values current chosen based on what seems to look
 	//			right to J-san
@@ -108,6 +109,7 @@ public class Unit : MonoBehaviour{
 
 	public void handleUnit()
     {
+        done = false;
         movesRemaining = moveLimit;
         displayReachableCells();
         IntfController controller = GetComponent<IntfController>();
@@ -136,7 +138,8 @@ public class Unit : MonoBehaviour{
 		//	position, for better or for worst
 		gameObject.transform.position = currentPos;
         GameObject.Find("gridOverlay").GetComponent<Grid>().hideAll();
-        movesRemaining -= n;
+        if(currentCell == destCell)
+            movesRemaining -= n;
         displayReachableCells();
 	}
 

@@ -53,6 +53,7 @@ public class ManualController : MonoBehaviour, IntfController {
         if (unit.movesRemaining == 0)
         {
             done = true;
+            unit.done = true;
         }
     }
 }
