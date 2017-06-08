@@ -40,7 +40,7 @@ public class Init : MonoBehaviour {
 
         GameObject unit2 = new GameObject("char2");
         Unit unitComp2 = unit2.AddComponent<Unit>();
-        unit2.AddComponent<ManualController>();
+        unit2.AddComponent<RandomAIController>();
         unitComp2.setUnit(thisGrid[2,2], Unit.Direction.ULeft, Unit.Faction.Player, "flammen", 008);
 
         allUnits.Add(unitComp1);

@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 public class Unit : MonoBehaviour{
 
-	// Similar to K-sama's code, this is the main 'UNIT' class
-	//	for the prototype --> will convert to abstract when
-	// 	we have a clearer notion of a complete game >.<
+    // Similar to K-sama's code, this is the main 'UNIT' class
+    //	for the prototype --> will convert to abstract when
+    // 	we have a clearer notion of a complete game >.<
 
-	string unitName;
-	int id;
+    public string unitName;
+    public int id;
     public Faction unitFaction;
 	public Vector3 currentPos;
     public Direction currentDir;
