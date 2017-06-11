@@ -18,14 +18,17 @@ public class Unit : MonoBehaviour{
     public int movesRemaining = 6;
     public bool done = true;
     public int health = 100;
-	// NOTE: values current chosen based on what seems to look
-	//			right to J-san
-	float xCellOffset = -0.03f;
-	float yCellOffset = 0.12f;
+    // NOTE: values current chosen based on what seems to look
+    //			right to J-san
+    //float xCellOffset = -0.03f;
+    //float yCellOffset = 0.12f;
+    // NOTE: K-sama messed with things and updated offset values
+    float xCellOffset = 0.03f;
+    float yCellOffset = 0.24f;
 
     // setUnit sets the internal state of this unit, and then calls displayUnit
     // to reflect that in the game screen
-	public void setUnit(Cell cell, Direction dir, Faction faction, string name, int id) {
+    public void setUnit(Cell cell, Direction dir, Faction faction, string name, int id) {
 		updatePos (cell);
 		this.currentDir = dir;
 		unitName = name;
@@ -102,10 +105,10 @@ public class Unit : MonoBehaviour{
 
         transform.position = currentPos;
         name = unitName + id;
-
-        // using SpriteHost to retrieve the image for this unit
-        spriter.sprite = (Sprite) Resources.Load<Sprite>("sprites/" + unitName + directionToString(currentDir));
-	}
+        
+        Sprite[] sprites = Resources.LoadAll<Sprite>("sprites/" + unitName);
+        spriter.sprite = sprites[directionToNum(currentDir)];
+    }
 
 	public void handleUnit()
     {
@@ -122,8 +125,11 @@ public class Unit : MonoBehaviour{
 		SpriteRenderer spriter = gameObject.GetComponent<SpriteRenderer> ();
         if (spriter == null)
             spriter = gameObject.AddComponent<SpriteRenderer>();
-		spriter.sprite = (Sprite)Resources.Load<Sprite> ("sprites/" + unitName + directionToString (newDir));
+
+        Sprite[] sprites = Resources.LoadAll<Sprite> ("sprites/" + unitName);
         currentDir = newDir;
+
+        spriter.sprite = sprites[directionToNum(currentDir)];
 	}
 
 
@@ -133,6 +139,8 @@ public class Unit : MonoBehaviour{
 		Cell destCell = currentGrid.nextCell (currentCell, currentDir, n);
 		Vector3 newPos = destCell.getPos ();
 
+        if (destCell == currentCell)
+            return;
 		changeCell (destCell);
 		// this works because changeCell() also updates the currentPos to the destination
 		//	position, for better or for worst
@@ -152,28 +160,22 @@ public class Unit : MonoBehaviour{
 
     }
 
-
-    // WARNING: will return an EMPTY STRING in the case that the
-    //				direction variable is screwed up 
-    public string directionToString(Direction dir)
+    public int directionToNum(Direction dir)
     {
-        string retStr = "";
         switch(dir)
         {
             case Direction.LLeft:
-                retStr = "LL";
+                return 2;
                 break;
             case Direction.LRight:
-                retStr = "LR";
-                break;
+                return 3;
             case Direction.ULeft:
-                retStr = "UL";
-                break;
+                return 0;
             case Direction.URight:
-                retStr = "UR";
-                break;
+                return 1;
+            default:
+                return 0;
         }
-        return retStr;
     }
 
     public List<string> getAvailableActions()

@@ -8,6 +8,9 @@ public class Cell {
     Unit currentUnit;
     private int row;
     private int col;
+
+    public static float xOffset = 1f;
+    public static float yOffset = 0.5f;
     
     // NOTE: a NULL UNIT is assigned to Cell upon construction
     public Cell(int type, Vector3 position, int row, int col)

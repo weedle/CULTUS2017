@@ -16,14 +16,14 @@ public class Grid : MonoBehaviour {
         gridLayout = new Cell[5,10];
         // NOTE: all cells in this grid uses '2-tiles' ( refer to labels in 'sprites' folder )
         for (int r = 0; r < gridLayout.GetLength(0); r++) {
-			float xVal = r * -0.5f;
-			float yVal = r * -0.25f;
+			float xVal = r * -1 * Cell.xOffset;
+			float yVal = r * -1 * Cell.yOffset;
 			for (int i = 0; i < gridLayout.GetLength(1); i++) {
 				//print("current pos values: x = " + xVal + " , y = " + yVal);
 				Cell currentCell = new Cell (1, new Vector3(xVal, yVal), r, i);
                 gridLayout[r,i] = currentCell;
-				xVal += 0.5f;
-				yVal += -0.25f;
+				xVal += Cell.xOffset;
+				yVal -= Cell.yOffset;
 			}
 		}
 	}

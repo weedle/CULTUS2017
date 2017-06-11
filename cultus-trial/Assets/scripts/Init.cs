@@ -9,7 +9,7 @@ public class Init : MonoBehaviour {
     public GameObject gridOverlay;
 
 	void Start () {
-		float baseOrthoSize = Screen.height / 64.0f / 2.0f;
+		float baseOrthoSize = Screen.height / 64.0f / 1.5f;
 		Camera.main.orthographicSize = baseOrthoSize;
 
 
