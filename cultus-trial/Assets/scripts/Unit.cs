@@ -75,19 +75,17 @@ public class Unit : MonoBehaviour{
 
 	// WARNING: newCell must be unoccupied for changes to proceed
 	// WARNING: this does NOT change the unit display !!!
-	// NOTE: might want to revisit this method in a later phase
 	public void changeCell(Cell newCell) {
 		if (!newCell.getOccupied ()) {
 			currentCell.unoccupy ();
 			currentCell = newCell;
 			updatePos (newCell);
-			newCell.setUnit (this);		// does this work?
+			newCell.setUnit (this);		
 		}
 	}
 		
 
 	// USAGE: to actually display this unit on screen
-	// NOTE: maybe update this function to use the rendToDirection() method?
 	public void displayUnit() {
         SpriteRenderer spriter;
 
@@ -110,6 +108,7 @@ public class Unit : MonoBehaviour{
         spriter.sprite = sprites[directionToNum(currentDir)];
     }
 
+    
 	public void handleUnit()
     {
         done = false;
