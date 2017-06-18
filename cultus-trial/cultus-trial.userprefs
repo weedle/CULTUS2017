@@ -1,9 +1,13 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\Unit.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\PopUpHandler.cs">
     <Files>
-      <File FileName="Assets\scripts\ValueIteration.cs" Line="1" Column="1" />
-      <File FileName="Assets\scripts\Unit.cs" Line="107" Column="30" />
+      <File FileName="Assets\scripts\Init.cs" Line="47" Column="33" />
+      <File FileName="Assets\scripts\PopUpHandler.cs" Line="17" Column="3" />
+      <File FileName="Assets\scripts\Controller\ManualController.cs" Line="18" Column="2" />
+      <File FileName="Assets\scripts\Unit.cs" Line="90" Column="3" />
+      <File FileName="Assets\scripts\Action\Jump.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\Grid.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\scripts\Action\IntfActionModule.cs" />
+     <Compile Include="Assets\scripts\Action\Jump.cs" />
      <Compile Include="Assets\scripts\Cell.cs" />
      <Compile Include="Assets\scripts\Controller\IntfController.cs" />
      <Compile Include="Assets\scripts\Controller\ManualController.cs" />
@@ -53,6 +54,7 @@
      <Compile Include="Assets\scripts\Controller\SimpleAIController.cs" />
      <Compile Include="Assets\scripts\Grid.cs" />
      <Compile Include="Assets\scripts\Init.cs" />
+     <Compile Include="Assets\scripts\PopUpHandler.cs" />
      <Compile Include="Assets\scripts\Timer.cs" />
      <Compile Include="Assets\scripts\Unit.cs" />
      <Compile Include="Assets\scripts\ValueIteration.cs" />
