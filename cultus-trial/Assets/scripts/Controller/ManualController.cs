@@ -54,19 +54,27 @@ public class ManualController : MonoBehaviour, IntfController {
             else
                 unit.rendToDirection(Unit.Direction.LLeft);
         }
+        // note: this will be changed so we use Jenne's nifty menus
         else if(Input.GetButtonDown("Fire1") &&
             actions.Length != 0)
         {
             print("gonna attack: " + actions[attackIndex].getActionName());
 
             HashSet<Cell> targetCells = GetComponent<IntfActionModule>().findTargetCells(unit.currentCell, unit.currentDir);
+
+            // note: for single panel, cell is either yellow or red
+            // but for multiple panels, we'll have to iterate through them
             if (GetComponent<IntfActionModule>().findTargetUnits(unit.currentCell, unit.currentDir).Count != 0)
             {
+                // yellow highlight to show target cells
                 GameObject.Find("gridOverlay").GetComponent<Grid>()
                     .highlightCells(targetCells, (Sprite)Resources.Load<Sprite>("sprites/attackMarker"));
+                //GetComponent<IntfActionModule>().executeAction(unit.currentCell, unit.currentDir);
+                //unit.movesRemaining = 0;
             }
             else
             {
+                // red highlight to show target cells
                 GameObject.Find("gridOverlay").GetComponent<Grid>()
                     .highlightCells(targetCells, (Sprite)Resources.Load<Sprite>("sprites/highlightMarker"));
             }

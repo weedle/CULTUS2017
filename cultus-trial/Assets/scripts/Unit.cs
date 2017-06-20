@@ -210,8 +210,7 @@ public class Unit : MonoBehaviour{
     public void takeDamage(int damage)
     {
         health -= damage;
-        if (health <= 0)
-            Destroy(gameObject);
+        // handle death somehow?
     }
 
 }
