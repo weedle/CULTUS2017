@@ -23,7 +23,10 @@ public interface IntfActionModule {
     void executeAction(Cell position, Unit.Direction facing);
 
     // returns a list of units in range (may be empty) of position
-    List<Unit> findTargets(Cell position, Unit.Direction facing);
+    HashSet<Unit> findTargetUnits(Cell position, Unit.Direction facing);
+
+    // returns a list of cells in range
+    HashSet<Cell> findTargetCells(Cell position, Unit.Direction facing);
 
     // returns the states of target units after executing the action
     // this assumes every action as a target, is that fair?

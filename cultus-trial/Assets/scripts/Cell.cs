@@ -75,4 +75,9 @@ public class Cell {
             isOccupied = true;
         }
     }
+
+    public Unit getUnit()
+    {
+        return currentUnit;
+    }
 }

@@ -14,7 +14,7 @@ public class Unit : MonoBehaviour{
 	public Vector3 currentPos;
     public Direction currentDir;
     public Cell currentCell;
-	public PopUpHandler menuHandler;			// handles pop-up selection menu
+	//public PopUpHandler menuHandler;			// handles pop-up selection menu
     public static int moveLimit = 6;
     public int movesRemaining = 6;
     public bool done = true;
@@ -116,6 +116,7 @@ public class Unit : MonoBehaviour{
 	public void handleUnit()
     {
         done = false;
+        print("[U:hU] health: " + health);
         movesRemaining = moveLimit;
         displayReachableCells();
         IntfController controller = GetComponent<IntfController>();
@@ -132,6 +133,7 @@ public class Unit : MonoBehaviour{
         Sprite[] sprites = Resources.LoadAll<Sprite> ("sprites/" + unitName);
         currentDir = newDir;
 
+        displayReachableCells();
         spriter.sprite = sprites[directionToNum(currentDir)];
 	}
 
@@ -170,7 +172,6 @@ public class Unit : MonoBehaviour{
         {
             case Direction.LLeft:
                 return 2;
-                break;						// Q: why are there a break here but not in the other cases?
             case Direction.LRight:
                 return 3;
             case Direction.ULeft:
@@ -199,11 +200,18 @@ public class Unit : MonoBehaviour{
 	// USAGE: clicking on the unit should display the unit's pop-up menu
 	// NOTE: added a 2DCollider to this unit to make this work
 	void OnMouseDown() {
+        /*
 		if (GetComponent<PopUpHandler> () == null)
 			menuHandler = gameObject.AddComponent<PopUpHandler> ();
 		menuHandler.displayPopUp ();
+        */
 	}
 
-
+    public void takeDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+            Destroy(gameObject);
+    }
 
 }
