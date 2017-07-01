@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class RandomAIController : MonoBehaviour, IntfController
 {
@@ -38,7 +39,7 @@ public class RandomAIController : MonoBehaviour, IntfController
 
         while (unit.currentCell == currentCell)
         {
-            int random = Random.Range(0, 6);
+            int random = UnityEngine.Random.Range(0, 6);
             switch (random)
             {
                 case 0:
@@ -76,5 +77,20 @@ public class RandomAIController : MonoBehaviour, IntfController
             done = true;
             unit.done = true;
         }
+    }
+
+    bool IntfController.inProgress()
+    {
+        throw new NotImplementedException();
+    }
+
+    void IntfController.handleTurn()
+    {
+        throw new NotImplementedException();
+    }
+
+    void IntfController.wait()
+    {
+        throw new NotImplementedException();
     }
 }

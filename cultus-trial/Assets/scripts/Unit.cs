@@ -213,4 +213,11 @@ public class Unit : MonoBehaviour{
         // handle death somehow?
     }
 
+    public void wait()
+    {
+        IntfController controller = GetComponent<IntfController>();
+        if (controller != null)
+            controller.wait();
+    }
+
 }

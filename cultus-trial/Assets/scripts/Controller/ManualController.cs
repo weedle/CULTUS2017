@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class ManualController : MonoBehaviour, IntfController {
     IntfActionModule[] actions;
@@ -89,5 +90,21 @@ public class ManualController : MonoBehaviour, IntfController {
             done = true;
             unit.done = true;
         }
+    }
+
+    bool IntfController.inProgress()
+    {
+        throw new NotImplementedException();
+    }
+
+    void IntfController.handleTurn()
+    {
+        throw new NotImplementedException();
+    }
+
+    void IntfController.wait()
+    {
+        Unit unit = GetComponent<Unit>();
+        unit.movesRemaining = 0;
     }
 }
