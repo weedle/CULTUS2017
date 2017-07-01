@@ -115,6 +115,7 @@ public class Unit : MonoBehaviour{
 	public void handleUnit()
     {
         done = false;
+        print("[U:hU] health: " + health);
         movesRemaining = moveLimit;
         displayReachableCells();
         IntfController controller = GetComponent<IntfController>();
@@ -131,6 +132,7 @@ public class Unit : MonoBehaviour{
         Sprite[] sprites = Resources.LoadAll<Sprite> ("sprites/" + unitName);
         currentDir = newDir;
 
+        displayReachableCells();
         spriter.sprite = sprites[directionToNum(currentDir)];
 	}
 
@@ -169,7 +171,6 @@ public class Unit : MonoBehaviour{
         {
             case Direction.LLeft:
                 return 2;
-                break;						// Q: why are there a break here but not in the other cases?
             case Direction.LRight:
                 return 3;
             case Direction.ULeft:
@@ -193,7 +194,4 @@ public class Unit : MonoBehaviour{
         }
         return actionStrings;
     }
-		
-
-
 }

@@ -36,6 +36,7 @@ public class Init : MonoBehaviour {
         GameObject unit1 = new GameObject("char");
         Unit unitComp1 = unit1.AddComponent<Unit>();
         unit1.AddComponent<ManualController>();
+        unit1.AddComponent<SinglePanelBasicAttack>().actionName = "testAttack";
         unitComp1.setUnit(startCell, Unit.Direction.LRight, Unit.Faction.Player, "flammen", 007);
 
         GameObject unit2 = new GameObject("char2");
