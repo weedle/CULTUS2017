@@ -14,7 +14,6 @@ public class Unit : MonoBehaviour{
 	public Vector3 currentPos;
     public Direction currentDir;
     public Cell currentCell;
-	public PopUpHandler menuHandler;			// handles pop-up selection menu
     public static int moveLimit = 6;
     public int movesRemaining = 6;
     public bool done = true;
@@ -194,16 +193,7 @@ public class Unit : MonoBehaviour{
         }
         return actionStrings;
     }
-
-
-	// USAGE: clicking on the unit should display the unit's pop-up menu
-	// NOTE: added a 2DCollider to this unit to make this work
-	void OnMouseDown() {
-		if (GetComponent<PopUpHandler> () == null)
-			menuHandler = gameObject.AddComponent<PopUpHandler> ();
-		menuHandler.displayPopUp ();
-	}
-
+		
 
 
 }
