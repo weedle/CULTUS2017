@@ -5,7 +5,8 @@ using System.Collections.Generic;
 
 public class SinglePanelBasicAttack : MonoBehaviour, IntfActionModule
 {
-    public string actionName;
+    //public string actionName;
+	private string actionName = "spba01 - display attk";
 
     // returns the name of this attack
     public string getActionName()
@@ -13,7 +14,8 @@ public class SinglePanelBasicAttack : MonoBehaviour, IntfActionModule
         // sample text to return (we'll change this!)
         // later, let's figure out a systematic way of
         // categorizing and naming these
-        return "spba01 - display attk";
+        // return "spba01 - display attk";
+		return actionName;
     }
 
     // executes the action
@@ -27,6 +29,7 @@ public class SinglePanelBasicAttack : MonoBehaviour, IntfActionModule
                 // we can change this to an appropriate value later
                 unit.takeDamage(0);
             }
+			gameObject.GetComponent<Unit> ().canAct = false;
         }
     }
 

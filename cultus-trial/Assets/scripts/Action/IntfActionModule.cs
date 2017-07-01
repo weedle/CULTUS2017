@@ -33,6 +33,5 @@ public interface IntfActionModule {
     // like, you can attack units, heal units, maybe cast buffs
     // btw this is used to determine the utility of an action
     // we use it for the value iteration routine 
-    List<Unit> resultOfAction(Cell position, 
-        Unit.Direction facing, List<Unit> targets);
+    List<Unit> resultOfAction(Cell position, Unit.Direction facing, List<Unit> targets);
 }

@@ -17,6 +17,7 @@ public class Unit : MonoBehaviour{
     public static int moveLimit = 6;
     public int movesRemaining = 6;
     public bool done = true;
+	public bool canAct = true;
     public int health = 100;
     // NOTE: values current chosen based on what seems to look
     //			right to J-san
@@ -25,6 +26,7 @@ public class Unit : MonoBehaviour{
     // NOTE: K-sama messed with things and updated offset values
     float xCellOffset = 0.03f;
     float yCellOffset = 0.24f;
+
 
 	
 
@@ -194,6 +196,7 @@ public class Unit : MonoBehaviour{
         }
         return actionStrings;
     }
+
 
     public void takeDamage(int damage)
     {
