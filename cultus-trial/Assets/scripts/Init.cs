@@ -35,6 +35,10 @@ public class Init : MonoBehaviour {
 		allUnits = new List<Unit> ();
         GameObject unit1 = new GameObject("char");
         Unit unitComp1 = unit1.AddComponent<Unit>();
+
+		// WARNING: easy placeholder function until auto-turn transitions are implemented
+		unit1.AddComponent<Collider2D> ();
+
         unit1.AddComponent<ManualController>();
 		unit1.AddComponent<SinglePanelBasicAttack> ();
 		unit1.AddComponent<JumpTestAction> ();

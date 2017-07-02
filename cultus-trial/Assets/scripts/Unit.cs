@@ -204,10 +204,23 @@ public class Unit : MonoBehaviour{
         // handle death somehow?
     }
 
+	// USAGE: the unit turn essentially ends when this is called 
     public void wait()
     {
         IntfController controller = GetComponent<IntfController>();
         if (controller != null)
             controller.wait();
     }
+
+
+	// USAGE: 
+	public void onMouseDown() {
+		Debug.Log ("Wow this works!");
+	}
+
+
+
+
+
+
 }

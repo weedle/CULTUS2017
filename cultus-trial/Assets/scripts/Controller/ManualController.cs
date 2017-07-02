@@ -92,16 +92,6 @@ public class ManualController : MonoBehaviour, IntfController {
         }
     }
 
-    bool IntfController.inProgress()
-    {
-        throw new NotImplementedException();
-    }
-
-    void IntfController.handleTurn()
-    {
-        throw new NotImplementedException();
-    }
-
     void IntfController.wait()
     {
         Unit unit = GetComponent<Unit>();

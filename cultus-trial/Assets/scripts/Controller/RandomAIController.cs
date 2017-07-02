@@ -79,16 +79,6 @@ public class RandomAIController : MonoBehaviour, IntfController
         }
     }
 
-    bool IntfController.inProgress()
-    {
-        throw new NotImplementedException();
-    }
-
-    void IntfController.handleTurn()
-    {
-        throw new NotImplementedException();
-    }
-
     void IntfController.wait()
     {
         throw new NotImplementedException();

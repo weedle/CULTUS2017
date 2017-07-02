@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 
 public class WaitIcon : MonoBehaviour, IntfMenuItem {
+	
     public void activate()
     {
         // this menu item is the child of a menu gameobject
@@ -11,8 +12,6 @@ public class WaitIcon : MonoBehaviour, IntfMenuItem {
         // getComponentInParent gets the parent object's Unit component
         Unit unit = transform.parent.GetComponentInParent<Unit>();
         if(unit != null)
-        {
             unit.wait();
-        }
     }
 }
