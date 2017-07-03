@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class Unit : MonoBehaviour{
 
@@ -26,9 +27,9 @@ public class Unit : MonoBehaviour{
     // NOTE: K-sama messed with things and updated offset values
     float xCellOffset = 0.03f;
     float yCellOffset = 0.24f;
+	float xMenuOffset = -0.70f;
+	float yMenuOffset = 0.60f;
 
-
-	
 
     // setUnit sets the internal state of this unit, and then calls displayUnit
     // to reflect that in the game screen
@@ -198,6 +199,7 @@ public class Unit : MonoBehaviour{
     }
 
 
+
     public void takeDamage(int damage)
     {
         health -= damage;
@@ -213,10 +215,37 @@ public class Unit : MonoBehaviour{
     }
 
 
-	// USAGE: 
-	public void onMouseDown() {
-		Debug.Log ("Wow this works!");
+
+	// USAGE: opens unit's pop-up menu
+	// NOTE: replace this when we have implemented auto-turn transitions
+	// 		 (requires 'BoxCollider2D' component)
+	public void OnMouseDown() {
+		makePopUp ();
 	}
+
+	// USAGE: creates pop-up menu
+	public void makePopUp() {
+
+		// sets up menu specifications
+		GameObject menu = Resources.Load ("icon-group") as GameObject;
+		menu.transform.position = new Vector3 (currentPos.x + xMenuOffset, 
+			currentPos.y + yMenuOffset);
+		menu.AddComponent<MainPop> ();
+		menu.GetComponent<MainPop> ().initMenu ();
+
+		// preventing the unit from moving when the pop-up menu is on-screen
+		// WARNING: not sure if this works XD 
+		
+
+		// creates the menu on screen
+		menu = Instantiate (menu);
+
+	}
+
+
+
+
+
 
 
 

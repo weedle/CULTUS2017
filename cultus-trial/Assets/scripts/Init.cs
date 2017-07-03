@@ -37,7 +37,7 @@ public class Init : MonoBehaviour {
         Unit unitComp1 = unit1.AddComponent<Unit>();
 
 		// WARNING: easy placeholder function until auto-turn transitions are implemented
-		unit1.AddComponent<Collider2D> ();
+		unit1.AddComponent<BoxCollider2D> ();
 
         unit1.AddComponent<ManualController>();
 		unit1.AddComponent<SinglePanelBasicAttack> ();

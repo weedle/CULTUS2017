@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 
 public class WaitIcon : MonoBehaviour, IntfMenuItem {
-	
+
     public void activate()
     {
         // this menu item is the child of a menu gameobject
