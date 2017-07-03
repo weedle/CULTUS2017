@@ -8,7 +8,10 @@ public class ManualController : MonoBehaviour, IntfController {
     int attackIndex = 0;
 
     private bool done = true;
+	private bool paused;
 
+	// NOTE: will be phasing out this implementation for a more
+	// 		 reliable design pattern
     public bool inProgress()
     {
         return !done;
@@ -19,12 +22,13 @@ public class ManualController : MonoBehaviour, IntfController {
         Unit unit = GetComponent<Unit>();
         done = false;
         actions = GetComponents<IntfActionModule>();
+		paused = false;
     }
 
     void Update()
     {
-        if (done)
-            return;
+        if (done || paused)		// see notes for 'inProgress' and 'setPaused'
+			return;
 
         Unit unit = GetComponent<Unit>();
         if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -97,4 +101,10 @@ public class ManualController : MonoBehaviour, IntfController {
         Unit unit = GetComponent<Unit>();
         unit.movesRemaining = 0;
     }
+
+	// USAGE: currently used to "pause" unit movement
+	// WARNING: there is probably a much better way of doing this
+	public void setPause(bool p) {
+		paused = p;
+	}
 }

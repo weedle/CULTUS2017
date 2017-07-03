@@ -8,18 +8,18 @@ public class MainPop : MonoBehaviour, IntfMenu {
 	public void initMenu() {
 
 		// adding appropriate classes to each of the 3 icons
-		// (there may be a better way of doing this XD )
-		GameObject child = transform.GetChild (1).gameObject;
+		GameObject child = transform.GetChild (0).gameObject;
 		child.AddComponent<ActionIcon> ();
-		child = transform.GetChild (2).gameObject;
+		child = transform.GetChild (1).gameObject;
 		child.AddComponent<WaitIcon> ();
-		child = transform.GetChild (3).gameObject;
+		child = transform.GetChild (2).gameObject;
 		child.AddComponent<ItemIcon> ();
 
 
 	}
 
 	public void destroyMenu() {
+
 
 	}
 

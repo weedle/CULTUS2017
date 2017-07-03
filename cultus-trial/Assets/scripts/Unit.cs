@@ -20,6 +20,7 @@ public class Unit : MonoBehaviour{
     public bool done = true;
 	public bool canAct = true;
     public int health = 100;
+
     // NOTE: values current chosen based on what seems to look
     //			right to J-san
     //float xCellOffset = -0.03f;
@@ -29,6 +30,9 @@ public class Unit : MonoBehaviour{
     float yCellOffset = 0.24f;
 	float xMenuOffset = -0.70f;
 	float yMenuOffset = 0.60f;
+
+	// specifies whether there is a pop-up menu currently associated with the unit 
+	public bool hasPopUp = false;
 
 
     // setUnit sets the internal state of this unit, and then calls displayUnit
@@ -216,15 +220,17 @@ public class Unit : MonoBehaviour{
 
 
 
-	// USAGE: opens unit's pop-up menu
+	// USAGE: open unit's pop-up menu if there isn't one already
 	// NOTE: replace this when we have implemented auto-turn transitions
 	// 		 (requires 'BoxCollider2D' component)
 	public void OnMouseDown() {
-		makePopUp ();
+		if(!hasPopUp)
+			makePopUp ();
 	}
 
 	// USAGE: creates pop-up menu
 	public void makePopUp() {
+		hasPopUp = true;
 
 		// sets up menu specifications
 		GameObject menu = Resources.Load ("icon-group") as GameObject;
@@ -234,12 +240,15 @@ public class Unit : MonoBehaviour{
 		menu.GetComponent<MainPop> ().initMenu ();
 
 		// preventing the unit from moving when the pop-up menu is on-screen
-		// WARNING: not sure if this works XD 
-		
-
+		// WARNING: am intentionally making this only work if this the unit
+		// 			is manually controlled! 
+		// NOTE: there is definitely a better way to do this... sorry in advance
+		if (GetComponent<IntfController>().GetType () == typeof(ManualController)) {
+			ManualController controller = GetComponent<ManualController> ();
+			controller.setPause (true);
+		}
 		// creates the menu on screen
 		menu = Instantiate (menu);
-
 	}
 
 
