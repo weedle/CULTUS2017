@@ -11,11 +11,13 @@ public class TurnHandler : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        allUnits = new List<Unit>();
+
     }
+    
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
         // if we have no units in play, this class does nothing
         if (allUnits.Count == 0)
             return;
@@ -37,6 +39,11 @@ public class TurnHandler : MonoBehaviour
                 unitIndex = 0;
             inProgress = false;
         }
+    }
+
+    public void init()
+    {
+        allUnits = new List<Unit>();
     }
 
     // add a new unit to the field

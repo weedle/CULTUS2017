@@ -27,8 +27,9 @@ public class Init : MonoBehaviour {
         overlayGrid.loadGrid();
 
         turnHandler = GameObject.Find("GameLogic").GetComponent<TurnHandler>();
+        turnHandler.init();
         Cell[,] thisGrid = emptyGrid.getLayout ();
-        print(thisGrid[0,0]);
+
         List<string> actions = new List<string>();
         actions.Add("singlepanelbasicattack");
         actions.Add("jumptest");
@@ -37,8 +38,7 @@ public class Init : MonoBehaviour {
         actions.Clear();
         turnHandler.addUnit(actions, false, thisGrid[2, 2], "flammen", Unit.Faction.Allied, Unit.Direction.LLeft, 8);
         turnHandler.displayUnits();
-
-
+        
 		// zooms into roughly the center cell of grid layout
 		Vector3 cameraPos = emptyGrid.getCentrePos ();
 		cameraPos.z = -10; 

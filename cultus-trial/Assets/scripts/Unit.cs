@@ -46,7 +46,7 @@ public class Unit : MonoBehaviour{
 		cell.setUnit (this);
 		currentCell = cell;
 		displayUnit ();
-		gameObject.AddComponent<BoxCollider2D> ();		// added 2D collider to OnMouseDown() access
+		//gameObject.AddComponent<BoxCollider2D> ();		// added 2D collider to OnMouseDown() access
 	}
 
 	public enum Direction {
@@ -126,6 +126,7 @@ public class Unit : MonoBehaviour{
         movesRemaining = moveLimit;
         displayReachableCells();
         IntfController controller = GetComponent<IntfController>();
+        print("in handle unit");
         if (controller != null)
             controller.handleTurn();
     }
