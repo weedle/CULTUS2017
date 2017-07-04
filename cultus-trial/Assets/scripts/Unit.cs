@@ -219,7 +219,7 @@ public class Unit : MonoBehaviour{
     }
 
 
-
+	
 	// USAGE: open unit's pop-up menu if there isn't one already
 	// NOTE: replace this when we have implemented auto-turn transitions
 	// 		 (requires 'BoxCollider2D' component)
@@ -250,15 +250,4 @@ public class Unit : MonoBehaviour{
 		// creates the menu on screen
 		menu = Instantiate (menu);
 	}
-
-
-
-
-
-
-
-
-
-
-
 }

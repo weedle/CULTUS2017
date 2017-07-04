@@ -16,10 +16,20 @@ public class MainPop : MonoBehaviour, IntfMenu {
 		child.AddComponent<ItemIcon> ();
 
 
+
+	}
+
+	void Update() {
+
+
 	}
 
 	public void destroyMenu() {
 
+
+		// un-pausing the unit movement
+		ManualController controller = transform.parent.GetComponentInParent<ManualController>();
+		controller.setPause (false);
 
 	}
 
