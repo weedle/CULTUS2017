@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Grid : MonoBehaviour {
     public bool isVirtual = false;
-    Cell[,] gridLayout = new Cell[5, 10];
+    Cell[,] gridLayout;
     GameObject[,] cellObjects = new GameObject[5, 10];
 
 	public Grid() {

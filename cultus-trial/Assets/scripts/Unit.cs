@@ -38,7 +38,7 @@ public class Unit : MonoBehaviour{
     // setUnit sets the internal state of this unit, and then calls displayUnit
     // to reflect that in the game screen
     public void setUnit(Cell cell, Direction dir, Faction faction, string name, int id) {
-		updatePos (cell);
+		updatePos (cell);  
 		this.currentDir = dir;
 		unitName = name;
         unitFaction = faction;

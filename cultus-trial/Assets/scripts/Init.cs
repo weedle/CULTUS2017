@@ -3,12 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Init : MonoBehaviour {
-
-	public List<Unit> allUnits;
     public GameObject grid;
     public GameObject gridOverlay;
+    private TurnHandler turnHandler;
 
-	void Start () {
+    void Start () {
 		float baseOrthoSize = Screen.height / 64.0f / 1.5f;
 		Camera.main.orthographicSize = baseOrthoSize;
 
@@ -27,31 +26,17 @@ public class Init : MonoBehaviour {
         overlayGrid.makeGrid();
         overlayGrid.loadGrid();
 
+        turnHandler = GameObject.Find("GameLogic").GetComponent<TurnHandler>();
         Cell[,] thisGrid = emptyGrid.getLayout ();
-		Cell startCell = thisGrid [0,0];
+        print(thisGrid[0,0]);
+        List<string> actions = new List<string>();
+        actions.Add("singlepanelbasicattack");
+        actions.Add("jumptest");
+        turnHandler.addUnit(actions, true, thisGrid[0, 0], "flammen", Unit.Faction.Player, Unit.Direction.LRight, 7);
 
-
-		// NOTE: all units created must be added to 'allUnits' list
-		allUnits = new List<Unit> ();
-        GameObject unit1 = new GameObject("char");
-        Unit unitComp1 = unit1.AddComponent<Unit>();
-
-		// WARNING: easy placeholder function until auto-turn transitions are implemented
-		unit1.AddComponent<BoxCollider2D> ();
-
-        unit1.AddComponent<ManualController>();
-		unit1.AddComponent<SinglePanelBasicAttack> ();
-		unit1.AddComponent<JumpTestAction> ();
-        unitComp1.setUnit(startCell, Unit.Direction.LRight, Unit.Faction.Player, "flammen", 007);
-
-        GameObject unit2 = new GameObject("char2");
-        Unit unitComp2 = unit2.AddComponent<Unit>();
-        unit2.AddComponent<RandomAIController>();
-        unitComp2.setUnit(thisGrid[2,2], Unit.Direction.ULeft, Unit.Faction.Player, "flammen", 008);
-
-        allUnits.Add(unitComp1);
-        allUnits.Add(unitComp2);
-        displayAllUnits ();
+        actions.Clear();
+        turnHandler.addUnit(actions, false, thisGrid[2, 2], "flammen", Unit.Faction.Allied, Unit.Direction.LLeft, 8);
+        turnHandler.displayUnits();
 
 
 		// zooms into roughly the center cell of grid layout
@@ -60,37 +45,12 @@ public class Init : MonoBehaviour {
 		Camera.main.transform.position = cameraPos;
     }
 
-
-	public void displayAllUnits() {
-		for (int i = 0; i < allUnits.Count; i++) {
-			allUnits [i].displayUnit ();
-		}
-	}
-
-
     // NOTE: currently only perform movement updates on the 1 fixed unit
     // 		 later we can modify this class to keep track of the
     //			'currently-selected-unit' and only that one can move
     //			at a particular time
-    int unitIndex = 0;
-    bool inProgress = false;
     void Update()
     {
-        if (inProgress == false)
-        {
-            allUnits[unitIndex].handleUnit();
-            inProgress = true;
-        }
 
-        if (allUnits[unitIndex].done == true)
-        {
-            unitIndex++;
-            if (unitIndex >= 2)
-                unitIndex = 0;
-            inProgress = false;
-        }
     }
-
-
-
 }
