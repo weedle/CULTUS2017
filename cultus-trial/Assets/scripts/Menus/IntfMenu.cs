@@ -6,7 +6,7 @@ using System.Collections;
 // unused and/or not do anything. This is okay
 public interface IntfMenu {
     // Called when first creating the menu
-    void initMenu();
+    void initMenu(GameObject unit);
 
     // Add an item to the menu, the item denotes the appropriate text
     // if it's an icon-based menu, let the impl class take care of that

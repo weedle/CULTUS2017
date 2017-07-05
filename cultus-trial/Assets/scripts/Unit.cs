@@ -225,8 +225,13 @@ public class Unit : MonoBehaviour{
 	// NOTE: replace this when we have implemented auto-turn transitions
 	// 		 (requires 'BoxCollider2D' component)
 	public void OnMouseDown() {
-		if(!hasPopUp)
+		if (!hasPopUp)
 			makePopUp ();
+		else {
+			GameObject menu = GameObject.Find ("pop-up");
+			menu.GetComponent<MainPop> ().destroyMenu ();
+			hasPopUp = false;
+		}
 	}
 
 	// USAGE: creates pop-up menu
@@ -235,10 +240,10 @@ public class Unit : MonoBehaviour{
 
 		// sets up menu specifications
 		GameObject menu = Resources.Load ("icon-group") as GameObject;
+		menu.name = "pop-up";
 		menu.transform.position = new Vector3 (currentPos.x + xMenuOffset, 
 			currentPos.y + yMenuOffset);
-		//menu.AddComponent<MainPop> ();
-		menu.GetComponent<MainPop> ().initMenu ();
+		menu.GetComponent<MainPop> ().initMenu (gameObject);
 
 		// preventing the unit from moving when the pop-up menu is on-screen
 		// WARNING: am intentionally making this only work if this the unit
@@ -250,5 +255,6 @@ public class Unit : MonoBehaviour{
 		}
 		// creates the menu on screen
 		menu = Instantiate (menu);
+		menu.name = "pop-up";
 	}
 }

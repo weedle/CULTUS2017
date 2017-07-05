@@ -5,8 +5,12 @@ using UnityEngine.UI;
 
 public class MainPop : MonoBehaviour, IntfMenu {
 
-	public void initMenu() {
+	private GameObject relatedUnit;
 
+	public void initMenu(GameObject unit) {
+		Debug.Log (unit.name);
+		relatedUnit = unit;
+		Debug.Log (relatedUnit.name);
     }
 
 	void Update() {
@@ -15,12 +19,10 @@ public class MainPop : MonoBehaviour, IntfMenu {
 	}
 
 	public void destroyMenu() {
-
-
 		// un-pausing the unit movement
-		ManualController controller = transform.parent.GetComponentInParent<ManualController>();
+		ManualController controller = relatedUnit.GetComponent<ManualController>();
 		controller.setPause (false);
-
+		Destroy (gameObject);
 	}
 
 	public bool findItem(string itemText) {
