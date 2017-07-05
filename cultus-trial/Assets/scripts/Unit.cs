@@ -31,9 +31,6 @@ public class Unit : MonoBehaviour{
 	float xMenuOffset = -0.70f;
 	float yMenuOffset = 0.60f;
 
-	// specifies whether there is a pop-up menu currently associated with the unit 
-	public bool hasPopUp = false;
-
 
     // setUnit sets the internal state of this unit, and then calls displayUnit
     // to reflect that in the game screen
@@ -46,7 +43,6 @@ public class Unit : MonoBehaviour{
 		cell.setUnit (this);
 		currentCell = cell;
 		displayUnit ();
-		//gameObject.AddComponent<BoxCollider2D> ();		// added 2D collider to OnMouseDown() access
 	}
 
 	public enum Direction {
@@ -214,36 +210,34 @@ public class Unit : MonoBehaviour{
 	
 	// USAGE: open unit's pop-up menu if there isn't one already
 	// NOTE: replace this when we have implemented auto-turn transitions
-	// 		 (requires 'BoxCollider2D' component)
+	// 		 (requires 'BoxCollider2D' component automatically generated for manually controlled units)
 	public void OnMouseDown() {
-		if (!hasPopUp)
-			makePopUp ();
-		else {
-			GameObject menu = GameObject.Find ("pop-up");
-			menu.GetComponent<MainPop> ().destroyMenu ();
-			hasPopUp = false;
-		}
-	}
+        // only toggle the menu if it's this unit's turn
+        if(done == false)
+            togglePopUp();
+    }
 
-	// USAGE: creates pop-up menu
-	public void makePopUp() {
-		hasPopUp = true;
-
-		// sets up menu specifications
-		GameObject menu = Resources.Load ("icon-group") as GameObject;
+	// USAGE: toggles pop-up menu
+	public void togglePopUp() {
+        GameObject menu = GameObject.Find("pop-up");
+        if (menu != null)
+        {
+            GetComponent<ManualController>().setPause(false);
+            menu.GetComponent<MainPop>().destroyMenu();
+            return;
+        }
+        // sets up menu specifications
+        menu = Resources.Load ("icon-group") as GameObject;
 		menu.name = "pop-up";
 		menu.transform.position = new Vector3 (currentPos.x + xMenuOffset, 
 			currentPos.y + yMenuOffset);
-		menu.GetComponent<MainPop> ().initMenu (gameObject);
 
-		// preventing the unit from moving when the pop-up menu is on-screen
-		// WARNING: am intentionally making this only work if this the unit
-		// 			is manually controlled! 
-		// NOTE: there is definitely a better way to do this... sorry in advance
-		if (GetComponent<IntfController>().GetType () == typeof(ManualController)) {
-			ManualController controller = GetComponent<ManualController> ();
-			controller.setPause (true);
-		}
+        // preventing the unit from moving when the pop-up menu is on-screen
+        // Only manually controlled units are clickable, so we can assume this unit
+        // has a manual controller
+		ManualController controller = GetComponent<ManualController> ();
+		controller.setPause (true);
+
 		// creates the menu on screen
 		menu = Instantiate (menu);
 		menu.name = "pop-up";

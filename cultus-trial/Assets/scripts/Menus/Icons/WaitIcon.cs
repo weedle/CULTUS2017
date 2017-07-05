@@ -16,6 +16,9 @@ public class WaitIcon : MonoBehaviour, IntfMenuItem {
             unit.GetComponent<ManualController>().wait();
         unit.GetComponent<ManualController>().setPause(false);
         unit.displayReachableCells();
+
+        // remove the menu
+        unit.togglePopUp();
     }
 
     

@@ -59,7 +59,7 @@ public class ManualController : MonoBehaviour, IntfController {
                 unit.rendToDirection(Unit.Direction.LLeft);
         }
         // note: this will be changed so we use Jenne's nifty menus
-        else if(Input.GetButtonDown("Fire1") &&
+        else if(false &&
             actions.Length != 0)
         {
             print("gonna attack: " + actions[attackIndex].getActionName());
