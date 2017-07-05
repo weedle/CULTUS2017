@@ -237,7 +237,7 @@ public class Unit : MonoBehaviour{
 		GameObject menu = Resources.Load ("icon-group") as GameObject;
 		menu.transform.position = new Vector3 (currentPos.x + xMenuOffset, 
 			currentPos.y + yMenuOffset);
-		menu.AddComponent<MainPop> ();
+		//menu.AddComponent<MainPop> ();
 		menu.GetComponent<MainPop> ().initMenu ();
 
 		// preventing the unit from moving when the pop-up menu is on-screen
