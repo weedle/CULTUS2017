@@ -163,10 +163,11 @@ public class Unit : MonoBehaviour{
         displayReachableCells();
 	}
 
-    private void displayReachableCells()
+    public void displayReachableCells()
     {
         Grid currentGrid = GameObject.Find("gridOverlay").GetComponent<Grid>();
         HashSet<Cell> cells = currentGrid.getCellsWithinRange(currentCell, movesRemaining);
+        GameObject.Find("gridOverlay").GetComponent<Grid>().hideAll();
         GameObject.Find("gridOverlay").GetComponent<Grid>()
             .highlightCells(cells, (Sprite)Resources.Load<Sprite>("sprites/movementMarker"));
 
@@ -210,16 +211,6 @@ public class Unit : MonoBehaviour{
         health -= damage;
         // handle death somehow?
     }
-
-	// USAGE: the unit turn essentially ends when this is called 
-    public void wait()
-    {
-        IntfController controller = GetComponent<IntfController>();
-        if (controller != null)
-            controller.wait();
-    }
-
-
 	
 	// USAGE: open unit's pop-up menu if there isn't one already
 	// NOTE: replace this when we have implemented auto-turn transitions

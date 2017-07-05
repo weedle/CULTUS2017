@@ -10,9 +10,16 @@ public class WaitIcon : MonoBehaviour, IntfMenuItem {
         // transform.parent gets that menu gameobject
         // that menu gameobject is the child of a unit
         // getComponentInParent gets the parent object's Unit component
-        print("waiting");
-        Unit unit = transform.parent.GetComponentInParent<Unit>();
-        if(unit != null)
-            unit.wait();
+        Unit unit = GameObject.Find("GameLogic").GetComponent<TurnHandler>()
+            .getCurrentUnit();
+        if (unit != null)
+            unit.GetComponent<ManualController>().wait();
+        unit.GetComponent<ManualController>().setPause(false);
+        unit.displayReachableCells();
     }
+
+    
+	public void OnMouseDown() {
+        activate();
+	}
 }
