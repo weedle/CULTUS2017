@@ -95,4 +95,9 @@ public class TurnHandler : MonoBehaviour
             allUnits[i].displayUnit();
         }
     }
+
+    public Unit getCurrentUnit()
+    {
+        return allUnits[unitIndex];
+    }
 }

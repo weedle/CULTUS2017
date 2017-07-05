@@ -29,7 +29,6 @@ public class ManualController : MonoBehaviour, IntfController {
     {
         if (done || paused)		// see notes for 'inProgress' and 'setPaused'
 			return;
-
         Unit unit = GetComponent<Unit>();
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {   // right arrow = LR
@@ -96,10 +95,13 @@ public class ManualController : MonoBehaviour, IntfController {
         }
     }
 
-    void IntfController.wait()
+    public void wait()
     {
+        print("wait activated");
         Unit unit = GetComponent<Unit>();
         unit.movesRemaining = 0;
+        unit.done = true;
+        done = true;
     }
 
 	// USAGE: currently used to "pause" unit movement
