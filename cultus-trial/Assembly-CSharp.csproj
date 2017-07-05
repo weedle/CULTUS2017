@@ -62,6 +62,7 @@
      <Compile Include="Assets\scripts\Menus\IntfMenuItem.cs" />
      <Compile Include="Assets\scripts\Menus\MainPop.cs" />
      <Compile Include="Assets\scripts\Timer.cs" />
+     <Compile Include="Assets\scripts\TurnHandler.cs" />
      <Compile Include="Assets\scripts\Unit.cs" />
      <Compile Include="Assets\scripts\ValueIteration.cs" />
  <Reference Include="UnityEngine.UI">
