@@ -2,14 +2,17 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\Menus\Icons\ActionIcon.cs">
     <Files>
-      <File FileName="Assets\scripts\Init.cs" Line="1" Column="1" />
-      <File FileName="Assets\scripts\Menus\Icons\WaitIcon.cs" Line="1" Column="1" />
-      <File FileName="Assets\scripts\Menus\Icons\ActionIcon.cs" Line="1" Column="1" />
-      <File FileName="Assets\scripts\Menus\Icons\ItemIcon.cs" Line="1" Column="1" />
-      <File FileName="Assets\scripts\Menus\MainPop.cs" Line="1" Column="1" />
-      <File FileName="Assets\scripts\Timer.cs" Line="1" Column="1" />
-      <File FileName="Assets\scripts\TurnHandler.cs" Line="1" Column="1" />
-      <File FileName="Assets\scripts\Controller\RandomAIController.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\Menus\Icons\ActionIcon.cs" Line="12" Column="3" />
+      <File FileName="Assets\scripts\Menus\Icons\WaitIcon.cs" Line="14" Column="31" />
+      <File FileName="Assets\scripts\Menus\MainPop.cs" Line="14" Column="6" />
+      <File FileName="Assets\scripts\Unit.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\Menus\IntfMenuItem.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\Menus\IntfMenu.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\TurnHandler.cs" Line="52" Column="29" />
+      <File FileName="Assets\scripts\Init.cs" Line="33" Column="51" />
+      <File FileName="Assets\scripts\Action\IntfActionModule.cs" Line="16" Column="3" />
+      <File FileName="Assets\scripts\Action\JumpTestAction.cs" Line="17" Column="33" />
+      <File FileName="Assets\scripts\Action\SinglePanelBasicAttack.cs" Line="66" Column="52" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

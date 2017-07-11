@@ -21,7 +21,6 @@ public class WaitIcon : MonoBehaviour, IntfMenuItem {
         unit.togglePopUp();
     }
 
-    
 	public void OnMouseDown() {
         activate();
 	}
