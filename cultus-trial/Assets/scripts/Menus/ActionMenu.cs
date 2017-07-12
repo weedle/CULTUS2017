@@ -37,7 +37,7 @@ public class ActionMenu : MonoBehaviour, IntfMenu
         switch (itemText)
         {
             case "jump":
-                print(item.name);
+                item.GetComponent<UnityEngine.UI.Button>().onClick.RemoveAllListeners();
                 print("added jump listener");
                 item.GetComponent<UnityEngine.UI.Button>()
                     .onClick.AddListener(delegate { jump(); });
