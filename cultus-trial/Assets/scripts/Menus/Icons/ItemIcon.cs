@@ -6,5 +6,10 @@ public class ItemIcon : MonoBehaviour, IntfMenuItem {
 
 	public void activate() {
 
-	}
+    }
+
+    public void deactivate()
+    {
+
+    }
 }

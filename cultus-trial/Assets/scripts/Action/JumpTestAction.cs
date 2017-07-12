@@ -11,7 +11,7 @@ using System.Linq;
  */
 public class JumpTestAction : MonoBehaviour, IntfActionModule {
 
-	private string actionName = "jump - display action";
+	private string actionName = "jump";
 	private int numJumpSpaces = 3;
 
 	public string getActionName() {
