@@ -76,6 +76,7 @@ public class ActionMenu : MonoBehaviour, IntfMenu
         print("jump?");
         Unit unit = GameObject.Find("GameLogic").GetComponent<TurnHandler>().getCurrentUnit();
         unit.GetComponent<JumpTestAction>().executeAction(unit.currentCell, unit.currentDir);
+        unit.togglePopUp();
     }
 
     public void smack()

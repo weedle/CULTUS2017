@@ -86,6 +86,7 @@ public class TurnHandler : MonoBehaviour
 
         Unit unitComp = newUnit.AddComponent<Unit>();
         unitComp.setUnit(startCell, facing, Unit.Faction.Player, unitName, id);
+        startCell.setUnit(unitComp);
         allUnits.Add(unitComp);
     }
 
