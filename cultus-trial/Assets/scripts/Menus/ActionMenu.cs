@@ -39,12 +39,12 @@ public class ActionMenu : MonoBehaviour, IntfMenu
             case "jump":
                 item.GetComponent<UnityEngine.UI.Button>().onClick.RemoveAllListeners();
                 item.GetComponent<UnityEngine.UI.Image>().raycastTarget = false;
-                print("added jump listener");
                 item.GetComponent<UnityEngine.UI.Button>()
                     .onClick.AddListener((delegate { jump(); }));
                 break;
             case "smack":
-                print("added smack listener");
+                item.GetComponent<UnityEngine.UI.Button>().onClick.RemoveAllListeners();
+                item.GetComponent<UnityEngine.UI.Image>().raycastTarget = false;
                 item.GetComponent<UnityEngine.UI.Button>()
                     .onClick.AddListener(smack);
                 break;
