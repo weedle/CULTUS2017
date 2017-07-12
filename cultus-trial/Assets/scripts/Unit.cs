@@ -201,11 +201,15 @@ public class Unit : MonoBehaviour{
     }
 
 
-
+	// USAGE: handling damage taken and associated consequences
     public void takeDamage(int damage)
     {
         health -= damage;
-        // handle death somehow?
+		if (health <= 0) {
+			TurnHandler turnH = GameObject.Find ("GameLogic").GetComponent<TurnHandler> ();
+			turnH.removeUnit (unitName);
+			Destroy (gameObject);
+		}
     }
 	
 	// USAGE: open unit's pop-up menu if there isn't one already

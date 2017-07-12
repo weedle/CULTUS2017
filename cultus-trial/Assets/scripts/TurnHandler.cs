@@ -8,6 +8,8 @@ public class TurnHandler : MonoBehaviour
     private List<Unit> allUnits;
     int unitIndex = 0;
     bool inProgress = false;
+
+
     // Use this for initialization
     void Start ()
     {
@@ -100,4 +102,16 @@ public class TurnHandler : MonoBehaviour
     {
         return allUnits[unitIndex];
     }
+
+	// USAGE: removes unit with specified name from allUnits, if such exists
+	// NOTE: in case of duplicates, it will only elimante the "first" one
+	public void removeUnit(string unitName)
+	{
+		foreach (Unit u in allUnits){
+			if (u.unitName == unitName) {
+				allUnits.Remove (u);
+				return;
+			}
+		}
+	}
 }

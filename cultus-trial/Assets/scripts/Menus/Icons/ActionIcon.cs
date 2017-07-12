@@ -9,8 +9,6 @@ public class ActionIcon : MonoBehaviour, IntfMenuItem {
 	public void activate() {
 		Unit unit = GameObject.Find ("GameLogic").GetComponent<TurnHandler> ().getCurrentUnit ();
 		List<String> allActions = unit.getAvailableActions ();
-
-
 	}
 
 	public void OnMouseDown() {
