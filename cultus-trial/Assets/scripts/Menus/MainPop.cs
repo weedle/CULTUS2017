@@ -12,6 +12,10 @@ public class MainPop : MonoBehaviour, IntfMenu {
 
     public void destroyMenu()
     {
+        foreach(IntfMenuItem item in GetComponentsInChildren<IntfMenuItem>())
+        {
+            item.deactivate();
+        }
         Destroy(gameObject);
     }
 

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class SinglePanelBasicAttack : MonoBehaviour, IntfActionModule
 {
     //public string actionName;
-	private string actionName = "spba01 - display attk";
+	private string actionName = "smack";
 
     // returns the name of this attack
     public string getActionName()

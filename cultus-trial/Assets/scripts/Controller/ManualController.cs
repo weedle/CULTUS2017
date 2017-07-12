@@ -10,6 +10,8 @@ public class ManualController : MonoBehaviour, IntfController {
     private bool done = true;
 	private bool paused;
 
+    private bool willAttack = false;
+
 	// NOTE: will be phasing out this implementation for a more
 	// 		 reliable design pattern
     public bool inProgress()
@@ -93,6 +95,11 @@ public class ManualController : MonoBehaviour, IntfController {
             done = true;
             unit.done = true;
         }
+    }
+
+    public void attack()
+    {
+
     }
 
     public void wait()

@@ -6,4 +6,6 @@ public interface IntfMenuItem {
 
 	// USAGE: specifies what happens when item is selected
     void activate();
+
+    void deactivate();
 }
