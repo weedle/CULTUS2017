@@ -29,18 +29,19 @@ public class ActionMenu : MonoBehaviour, IntfMenu
         item.GetComponentInChildren<UnityEngine.UI.Text>().text = itemText;
 
         item.transform.SetParent(gameObject.transform, false);
-        item.transform.localScale = new Vector3(1.5f, 0.75f, 1);
+        item.transform.localScale = new Vector3(0.75f, 0.5f, 1);
         item.transform.position = GameObject.Find("GameLogic").
             GetComponent<TurnHandler>().getCurrentUnit().transform.position
-            + new Vector3(0.2f, 2.2f + 0.5f * (items.Count-1), 0);
+            + new Vector3(0.2f, 2.2f + 0.55f * (items.Count-1), 0);
 
         switch (itemText)
         {
             case "jump":
                 item.GetComponent<UnityEngine.UI.Button>().onClick.RemoveAllListeners();
+                item.GetComponent<UnityEngine.UI.Image>().raycastTarget = false;
                 print("added jump listener");
                 item.GetComponent<UnityEngine.UI.Button>()
-                    .onClick.AddListener(delegate { jump(); });
+                    .onClick.AddListener((delegate { jump(); }));
                 break;
             case "smack":
                 print("added smack listener");
@@ -70,13 +71,14 @@ public class ActionMenu : MonoBehaviour, IntfMenu
         throw new NotImplementedException();
     }
 
-    private void jump()
+    public void jump()
     {
-        Unit unit = GameObject.Find("GameLogic").GetComponent<TurnHandler>().getCurrentUnit();
         print("jump?");
+        Unit unit = GameObject.Find("GameLogic").GetComponent<TurnHandler>().getCurrentUnit();
+        unit.GetComponent<JumpTestAction>().executeAction(unit.currentCell, unit.currentDir);
     }
 
-    private void smack()
+    public void smack()
     {
         Unit unit = GameObject.Find("GameLogic").GetComponent<TurnHandler>().getCurrentUnit();
         print("smack?");
