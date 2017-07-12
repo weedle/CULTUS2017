@@ -29,7 +29,7 @@ public class ActionMenu : MonoBehaviour, IntfMenu
         item.GetComponentInChildren<UnityEngine.UI.Text>().text = itemText;
 
         item.transform.SetParent(gameObject.transform, false);
-        item.transform.localScale = new Vector3(0.75f, 0.5f, 1);
+        item.transform.localScale = new Vector3(1.5f, 0.75f, 1);
         item.transform.position = GameObject.Find("GameLogic").
             GetComponent<TurnHandler>().getCurrentUnit().transform.position
             + new Vector3(0.2f, 2.2f + 0.55f * (items.Count-1), 0);
@@ -39,12 +39,12 @@ public class ActionMenu : MonoBehaviour, IntfMenu
             case "jump":
                 item.GetComponent<UnityEngine.UI.Button>().onClick.RemoveAllListeners();
                 item.GetComponent<UnityEngine.UI.Image>().raycastTarget = false;
-                print("added jump listener");
                 item.GetComponent<UnityEngine.UI.Button>()
                     .onClick.AddListener((delegate { jump(); }));
                 break;
             case "smack":
-                print("added smack listener");
+                item.GetComponent<UnityEngine.UI.Button>().onClick.RemoveAllListeners();
+                item.GetComponent<UnityEngine.UI.Image>().raycastTarget = false;
                 item.GetComponent<UnityEngine.UI.Button>()
                     .onClick.AddListener(smack);
                 break;
