@@ -3,6 +3,8 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
+// First we highlight the given cell, and give a chance for the 
+// unit to cancel/confirm the given action
 public class ActionMenu : MonoBehaviour, IntfMenu
 {
     private List<String> items;
@@ -40,7 +42,7 @@ public class ActionMenu : MonoBehaviour, IntfMenu
                 item.GetComponent<UnityEngine.UI.Button>().onClick.RemoveAllListeners();
                 item.GetComponent<UnityEngine.UI.Image>().raycastTarget = false;
                 item.GetComponent<UnityEngine.UI.Button>()
-                    .onClick.AddListener((delegate { jump(); }));
+                    .onClick.AddListener(jump);
                 break;
             case "smack":
                 item.GetComponent<UnityEngine.UI.Button>().onClick.RemoveAllListeners();
@@ -71,10 +73,19 @@ public class ActionMenu : MonoBehaviour, IntfMenu
         throw new NotImplementedException();
     }
 
-    public void jump()
+    public void jump() 
     {
+        Unit unit;
+        if (!highlight)
+        {
+            unit = GameObject.Find("GameLogic").GetComponent<TurnHandler>().getCurrentUnit();
+            GameObject.Find("gridOverlay").GetComponent<Grid>().highlightThing(unit, unit.GetComponent<JumpTestAction>());
+            highlight = true;
+            return;
+        }
+
         print("jump?");
-        Unit unit = GameObject.Find("GameLogic").GetComponent<TurnHandler>().getCurrentUnit();
+        unit = GameObject.Find("GameLogic").GetComponent<TurnHandler>().getCurrentUnit();
         unit.GetComponent<JumpTestAction>().executeAction(unit.currentCell, unit.currentDir);
         unit.togglePopUp();
     }
@@ -82,6 +93,6 @@ public class ActionMenu : MonoBehaviour, IntfMenu
     public void smack()
     {
         Unit unit = GameObject.Find("GameLogic").GetComponent<TurnHandler>().getCurrentUnit();
-        print("smack?");
+        unit.GetComponent<JumpTestAction>().executeAction(unit.currentCell, unit.currentDir);
     }
 }

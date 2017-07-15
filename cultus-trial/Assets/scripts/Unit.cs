@@ -136,14 +136,15 @@ public class Unit : MonoBehaviour{
         Sprite[] sprites = Resources.LoadAll<Sprite> ("sprites/" + unitName);
         currentDir = newDir;
 
-        displayReachableCells();
         spriter.sprite = sprites[directionToNum(currentDir)];
-	}
+        displayReachableCells();
+    }
 
 
     // USAGE: moves unit to the n-th cell in the current direction
-	public void moveUnit(int n) {
-		Grid currentGrid = GameObject.Find ("grid").GetComponent<Grid> ();
+	public void moveUnit(int n)
+    {
+        Grid currentGrid = GameObject.Find ("grid").GetComponent<Grid> ();
 		Cell destCell = currentGrid.nextCell (currentCell, currentDir, n);
 		Vector3 newPos = destCell.getPos ();
 
@@ -156,6 +157,8 @@ public class Unit : MonoBehaviour{
         GameObject.Find("gridOverlay").GetComponent<Grid>().hideAll();
         if(currentCell == destCell)
             movesRemaining -= n;
+        if (movesRemaining < 0)
+            movesRemaining = 0;
         displayReachableCells();
 	}
 

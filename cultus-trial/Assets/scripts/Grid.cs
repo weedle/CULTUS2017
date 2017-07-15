@@ -190,4 +190,18 @@ public class Grid : MonoBehaviour {
             }
         }
     }
+
+    public void highlightThing(Unit unit, IntfActionModule action)
+    {
+
+        HashSet<Cell> targetCells = action.findTargetCells(unit.currentCell, unit.currentDir);
+        if (action.findTargetUnits(unit.currentCell, unit.currentDir).Count == 0)
+        {
+            highlightCells(targetCells, (Sprite)Resources.Load<Sprite>("sprites/attackMarker"));
+        }
+        else
+        {
+            highlightCells(targetCells, (Sprite)Resources.Load<Sprite>("sprites/highlightMarker"));
+        }
+    }
 }
