@@ -118,13 +118,26 @@ public class Grid : MonoBehaviour {
 
     public HashSet<Cell> getCellsWithinRange(Cell startingPos, int n)
     {
-        HashSet<Cell> returnSet = addCellsWithinRangeRecursive(startingPos, n, new HashSet<Cell>());
+        Dictionary<Cell, int> dictCells = addCellsWithinRangeRecursive(startingPos, n, new Dictionary<Cell, int>());
+        HashSet<Cell> returnSet = new HashSet<Cell>();
+        foreach(Cell cell in dictCells.Keys)
+        {
+            returnSet.Add(cell);
+        }
         return returnSet;
     }
 
-    private HashSet<Cell> addCellsWithinRangeRecursive(Cell pos, int n, HashSet<Cell> cells)
+    /*
+        pos = cell we are at
+        n = number of hops remaining
+        cells = dict of previously reached cells and number of
+                hops remaining via previous route
+        this method allows us to avoid retreading the same
+        path repeatedly
+    */
+    Dictionary<Cell, int> addCellsWithinRangeRecursive(Cell pos, int n, Dictionary<Cell, int> cells)
     {
-        if (n == 0)
+        if (n <= 0)
             return cells;
         Cell lleft = nextCell(pos, Unit.Direction.LLeft, 1);
         Cell lright = nextCell(pos, Unit.Direction.LRight, 1);
@@ -136,11 +149,31 @@ public class Grid : MonoBehaviour {
         neighbours.Add(lright);
         neighbours.Add(uleft);
         neighbours.Add(uright);
-        cells.Add(pos);
+        if (cells.ContainsKey(pos))
+            cells[pos] = n;
+        else
+        {
+            if (!GameObject.Find("grid").GetComponent<Grid>().
+                getLayout()[pos.getRow(), pos.getCol()].getOccupied())
+                cells.Add(pos, n);
+        }
+        n--;
         foreach (Cell cell in neighbours)
         {
-            cells.Add(cell);
-            cells.UnionWith(addCellsWithinRangeRecursive(cell, n - 1, cells));
+            if (GameObject.Find("grid").GetComponent<Grid>().
+                getLayout()[cell.getRow(), cell.getCol()].getOccupied())
+                continue;
+            if (cells.ContainsKey(cell))
+            {
+                if (cells[cell] < n)
+                {
+                    cells = addCellsWithinRangeRecursive(cell, n, cells);
+                }
+            }
+            else
+            {
+                cells = addCellsWithinRangeRecursive(cell, n, cells);
+            }
         }
         return cells;
     }
@@ -155,6 +188,20 @@ public class Grid : MonoBehaviour {
                 spriter.sprite = sprite;
                 spriter.enabled = true;
             }
+        }
+    }
+
+    public void highlightThing(Unit unit, IntfActionModule action)
+    {
+
+        HashSet<Cell> targetCells = action.findTargetCells(unit.currentCell, unit.currentDir);
+        if (action.findTargetUnits(unit.currentCell, unit.currentDir).Count == 0)
+        {
+            highlightCells(targetCells, (Sprite)Resources.Load<Sprite>("sprites/attackMarker"));
+        }
+        else
+        {
+            highlightCells(targetCells, (Sprite)Resources.Load<Sprite>("sprites/highlightMarker"));
         }
     }
 }

@@ -31,7 +31,6 @@ public class JumpTestAction : MonoBehaviour, IntfActionModule {
 			Cell newCell = allTargets.Single ();
 			if (!newCell.getOccupied ()) {
 				thisUnit.moveUnit (numJumpSpaces);
-				thisUnit.movesRemaining -= 1;
 				thisUnit.canAct = false;
 			}
 		}
@@ -41,7 +40,7 @@ public class JumpTestAction : MonoBehaviour, IntfActionModule {
 	// returns a list of units in range (may be empty) of position
 	// WARNING: null is returned since this action does not affect ANY units
 	public HashSet<Unit> findTargetUnits(Cell position, Unit.Direction facing) {
-		return null;
+		return new HashSet<Unit>();
 	}
 
 	// returns a list of cells in range
