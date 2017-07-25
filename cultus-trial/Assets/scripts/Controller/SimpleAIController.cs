@@ -1,15 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
-public class SimpleAIController : MonoBehaviour {
+public class SimpleAIController : MonoBehaviour, IntfController {
 
-	// Use this for initialization
-	void Start () {
-	
+	private bool done = true;
+
+	public bool inProgress(){ 
+		return !done;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	//
+	public void handleTurn(){
+
+
 	}
+
+	//
+	public void Update(){
+
+
+	}
+
+	// USAGE: it isn't necessary for an the AI to wait...
+	// NOTE: an AI waits for no one!
+	public void wait() {
+		throw new NotImplementedException ();
+	}
+
+
 }
