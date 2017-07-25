@@ -5,7 +5,8 @@ using System;
 public class RandomAIController : MonoBehaviour, IntfController
 {
     Timer thisTimer;
-    private bool done = true;
+	private bool done = true;
+
 
     public bool inProgress()
     {
