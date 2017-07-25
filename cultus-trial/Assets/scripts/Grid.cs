@@ -118,7 +118,7 @@ public class Grid : MonoBehaviour {
 
     public HashSet<Cell> getCellsWithinRange(Cell startingPos, int n)
     {
-        Dictionary<Cell, int> dictCells = addCellsWithinRangeRecursive(startingPos, n, new Dictionary<Cell, int>());
+        Dictionary<Cell, int> dictCells = addCellsWithinRangeRecursive(startingPos, n+1, new Dictionary<Cell, int>());
         HashSet<Cell> returnSet = new HashSet<Cell>();
         foreach(Cell cell in dictCells.Keys)
         {
