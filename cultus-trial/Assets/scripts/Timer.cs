@@ -23,7 +23,8 @@ public class Timer : MonoBehaviour {
 
 
 	// USAGE: adds a new timer corresponding to the given ID
-	// NOTE: currently ID will also link to an AI-controlled Unit
+    // the timer is an index in the array with the value stored
+    // being the most recent time this timer was accessed
     public void addTimer(int timerId)
     {
         if(timers == null)
@@ -33,8 +34,13 @@ public class Timer : MonoBehaviour {
         numTimers++;
     }
 
+    // checkTimer will return true if duration microseconds
+    // have passed since the timer was last accessed
+    // it will also update the last access time for that timer
+    // otherwise, it will return false
 
-
+    // if checkTimer is called with an unused timerId, it will
+    // add the timer and return TRUE (vacuous case)
     public bool checkTimer(int timerId, float duration)
     {
         if (timers != null)
@@ -43,9 +49,15 @@ public class Timer : MonoBehaviour {
             {
                 if ((currTime - timers[timerId]) >= duration)
                 {
-                    addTimer(timerId);
+                    timers[timerId] = currTime;
                     return true;
                 }
+                return false;
+            }
+            else
+            {
+                addTimer(timerId);
+                return true;
             }
         }
         else
@@ -60,5 +72,6 @@ public class Timer : MonoBehaviour {
     public void removeTimer(int timerId)
     {
         timers.Remove(timerId);
+        numTimers--;
     }
 }
