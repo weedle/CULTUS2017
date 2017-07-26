@@ -73,26 +73,51 @@ public class ActionMenu : MonoBehaviour, IntfMenu
         throw new NotImplementedException();
     }
 
-    public void jump() 
+    // to call a method, we call highlightOrExecute while
+    // specifying which type of component we want to activate
+    public void jump()
     {
-        Unit unit;
-        if (!highlight)
-        {
-            unit = GameObject.Find("GameLogic").GetComponent<TurnHandler>().getCurrentUnit();
-            GameObject.Find("gridOverlay").GetComponent<Grid>().highlightThing(unit, unit.GetComponent<JumpTestAction>());
-            highlight = true;
-            return;
-        }
-
-        print("jump?");
-        unit = GameObject.Find("GameLogic").GetComponent<TurnHandler>().getCurrentUnit();
-        unit.GetComponent<JumpTestAction>().executeAction(unit.currentCell, unit.currentDir);
-        unit.togglePopUp();
+        highlightOrExecute(typeof(JumpTestAction));
     }
 
     public void smack()
     {
+        highlightOrExecute(typeof(SinglePanelBasicAttack));
+    }
+
+    // This function will take a type of action, and highlight
+    // the target cells the first time the action is selected.
+    // if the action is selected again, it is executed
+    // this acts as a sort of confirmation opportunity
+    public void highlightOrExecute(System.Type action)
+    {
+        if (!highlight)
+        {
+            highlightCells(action);
+            highlight = true;
+            return;
+        }
+        execute(action);
+    }
+
+    // Grid.highlightThing will highlight the target cells if
+    // given an IntfActionModule component
+    // here, we call the current unit and pass its action component
+    // to Grid.highlightThing
+    public void highlightCells(System.Type action)
+    {
         Unit unit = GameObject.Find("GameLogic").GetComponent<TurnHandler>().getCurrentUnit();
-        unit.GetComponent<JumpTestAction>().executeAction(unit.currentCell, unit.currentDir);
+        GameObject.Find("gridOverlay").GetComponent<Grid>().highlightThing(unit, (IntfActionModule) unit.GetComponent(action.ToString()));
+    }
+
+    // Execute gets the corresponding component of the current unit
+    // requests said action be executed
+    // it also makes the popup menu disappear
+    public void execute(System.Type action)
+    {
+        Unit unit = GameObject.Find("GameLogic").GetComponent<TurnHandler>().getCurrentUnit();
+        IntfActionModule module = (IntfActionModule)unit.GetComponent(action.ToString());
+        module.executeAction(unit.currentCell, unit.currentDir);
+        unit.togglePopUp();
     }
 }
