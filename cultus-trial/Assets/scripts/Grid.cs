@@ -14,6 +14,7 @@ public class Grid : MonoBehaviour {
 	// NOTE: the current grid layout is hard-coded for now =.=
 	public void makeGrid() {
         gridLayout = new Cell[5,10];
+
         // NOTE: all cells in this grid uses '2-tiles' ( refer to labels in 'sprites' folder )
         for (int r = 0; r < gridLayout.GetLength(0); r++) {
 			float xVal = r * -1 * Cell.xOffset;
@@ -29,6 +30,7 @@ public class Grid : MonoBehaviour {
 	}
 		
 
+	// USAGE: this loads the grid layout and its related elements (derp)
 	public void loadGrid() {
 
 		for (int r = gridLayout.GetLength(0) - 1; r >= 0; r--) {
@@ -56,9 +58,10 @@ public class Grid : MonoBehaviour {
         }
 	}
 
+
+	// USAGE: removes / hides all the grid overlay tiles
     public void hideAll()
     {
-
         for (int r = gridLayout.GetLength(0) - 1; r >= 0; r--)
         {
             for (int i = gridLayout.GetLength(1) - 1; i >= 0; i--)
@@ -68,6 +71,8 @@ public class Grid : MonoBehaviour {
         }
     }
     
+
+
 	// RETURNS: a crude estimate of the center of this grid layout
 	// USAGE: can use this to focus the camera on the centre cell
 	// NOTE: there's a probably a better way of doing this !!!
@@ -79,9 +84,13 @@ public class Grid : MonoBehaviour {
 	}
 
 
+
+	// USAGE: returns grid layout
 	public Cell[,] getLayout() {
 		return gridLayout;
 	}
+
+
 
 	// USAGE: returns the n-th cell from current cell in the specified direction
 	// NOTE: currently just used by the Unit class for movement process
@@ -116,6 +125,9 @@ public class Grid : MonoBehaviour {
 		return nthCell;
 	}
 
+
+
+	// USAGE: 
     public HashSet<Cell> getCellsWithinRange(Cell startingPos, int n)
     {
         Dictionary<Cell, int> dictCells = addCellsWithinRangeRecursive(startingPos, n+1, new Dictionary<Cell, int>());
@@ -126,6 +138,8 @@ public class Grid : MonoBehaviour {
         }
         return returnSet;
     }
+
+
 
     /*
         pos = cell we are at
@@ -178,6 +192,9 @@ public class Grid : MonoBehaviour {
         return cells;
     }
 
+
+
+	// USAGE: "highlights" the specified cells via a cell/grid overlay 
     public void highlightCells(HashSet<Cell> cells, Sprite sprite)
     {
         if(isVirtual)
@@ -191,6 +208,9 @@ public class Grid : MonoBehaviour {
         }
     }
 
+
+
+	// USAGE: wtf (jk)
     public void highlightThing(Unit unit, IntfActionModule action)
     {
 

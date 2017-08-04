@@ -3,12 +3,19 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
+// USAGE: deals damage to ONE of the nearest cells containing a unit that is an enemy of the
+// 		  current unit this attack is attached to!
 public class SinglePanelBasicAttack : MonoBehaviour, IntfActionModule
 {
-    //public string actionName;
 	private string actionName = "smack";
+	private int attackDamage = 5;
 
-    // returns the name of this attack
+	// USAGE: see IntfActionModule
+	public int isAttack(){
+		return attackDamage;
+	}
+
+    // USAGE: returns the name of this attack
     public string getActionName()
     {
         // sample text to return (we'll change this!)
@@ -18,7 +25,7 @@ public class SinglePanelBasicAttack : MonoBehaviour, IntfActionModule
 		return actionName;
     }
 
-    // executes the action
+    // USAGE: execute the action 
     public void executeAction(Cell position, Unit.Direction facing)
     {
         HashSet<Unit> units = findTargetUnits(position, facing);
@@ -26,8 +33,7 @@ public class SinglePanelBasicAttack : MonoBehaviour, IntfActionModule
         {
             foreach(Unit unit in units)
             {
-                // we can change this to an appropriate value later
-                unit.takeDamage(0);
+                unit.takeDamage(attackDamage);			
             }
 			gameObject.GetComponent<Unit> ().canAct = false;
         }

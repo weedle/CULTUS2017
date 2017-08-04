@@ -34,6 +34,7 @@ public class Timer : MonoBehaviour {
         numTimers++;
     }
 
+
     // checkTimer will return true if duration microseconds
     // have passed since the timer was last accessed
     // it will also update the last access time for that timer
@@ -66,6 +67,7 @@ public class Timer : MonoBehaviour {
         }
         return false;
     }
+
 
 
 	// USAGE: removes the timer corresponding to the given ID

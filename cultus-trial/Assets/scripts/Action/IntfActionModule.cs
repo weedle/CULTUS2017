@@ -16,6 +16,10 @@ using System.Collections.Generic;
 */
 public interface IntfActionModule {
 
+	// returns the base damage value of the action, if it is an attack action
+	// otherwise, return -1
+	int isAttack();
+
     // the name of this action
     string getActionName();
 

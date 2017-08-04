@@ -14,6 +14,10 @@ public class JumpTestAction : MonoBehaviour, IntfActionModule {
 	private string actionName = "jump";
 	private int numJumpSpaces = 3;
 
+	public int isAttack(){
+		return -1;
+	}
+
 	public string getActionName() {
 		return actionName;
 	}

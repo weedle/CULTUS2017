@@ -11,9 +11,6 @@ public class Init : MonoBehaviour {
 		float baseOrthoSize = Screen.height / 64.0f / 1.5f;
 		Camera.main.orthographicSize = baseOrthoSize;
 
-
-        // NOTE: making a new grid (ie. see below) is practically pointless because
-        //			it doesn't do anything  --> the current grid-layout is hard-coded
         grid = new GameObject("grid");
         Grid emptyGrid = grid.AddComponent<Grid>();
         emptyGrid.isVirtual = false;

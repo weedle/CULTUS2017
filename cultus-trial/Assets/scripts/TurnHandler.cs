@@ -10,13 +10,6 @@ public class TurnHandler : MonoBehaviour
     bool inProgress = false;
 
 
-    // Use this for initialization
-    void Start ()
-    {
-
-    }
-    
-	
 	// Update is called once per frame
 	void Update ()
     {
@@ -68,7 +61,8 @@ public class TurnHandler : MonoBehaviour
         if(faction == Unit.Faction.Player)
             newUnit.AddComponent<ManualController>();
         else
-            newUnit.AddComponent<RandomAIController>();
+            // newUnit.AddComponent<RandomAIController>(); 		
+			newUnit.AddComponent<SimpleAIController>(); 			/// MODIFED THIS HERE FOR TESTING !!! ///
 
         // add the appropriate IntfActionModule impls to the unit
         foreach(string action in actions)

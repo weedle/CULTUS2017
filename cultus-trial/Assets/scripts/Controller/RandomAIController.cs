@@ -22,7 +22,6 @@ public class RandomAIController : MonoBehaviour, IntfController
     }
 
 
-    int currTime = 0;
     void Update()
     {
         if (done)

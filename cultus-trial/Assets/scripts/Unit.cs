@@ -115,6 +115,7 @@ public class Unit : MonoBehaviour{
     }
 
     
+	// USAGE: called when the unit begins its turn; mainly for initialization
 	public void handleUnit()
     {
         done = false;
@@ -128,6 +129,7 @@ public class Unit : MonoBehaviour{
     }
 
     
+	// USAGE: renders / "turns" the unit in the specified direction
 	public void rendToDirection(Direction newDir) {
 		SpriteRenderer spriter = gameObject.GetComponent<SpriteRenderer> ();
         if (spriter == null)
@@ -169,7 +171,6 @@ public class Unit : MonoBehaviour{
         GameObject.Find("gridOverlay").GetComponent<Grid>().hideAll();
         GameObject.Find("gridOverlay").GetComponent<Grid>()
             .highlightCells(cells, (Sprite)Resources.Load<Sprite>("sprites/movementMarker"));
-
     }
 
 
@@ -191,7 +192,7 @@ public class Unit : MonoBehaviour{
     }
 
 
-	// USAGE: returns a list of names of the actions available to this unit
+	// USAGE: returns a list of names of all actions available to this unit
     public List<string> getAvailableActions()
     {
         IntfActionModule[]actions = GetComponents<IntfActionModule>();
