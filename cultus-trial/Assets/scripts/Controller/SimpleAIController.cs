@@ -66,28 +66,29 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 
 	// USAGE: returns best direction for unit to take to reach the nearest
 	// 		  'player'/'ally' unit
-	// NOTE: there is probably a better way to do this =.=|||
+	// NOTE: there is probably a better way to do this =.= ... gomen T.T
 	public Unit.Direction bestDir(Unit u){
-		Cell nearestUC = nearestUnitCell (u);
+		int uRow = u.currentCell.getRow();
+		int uCol = u.currentCell.getCol ();
+		Cell nearestUC = nearestUnitCell (uRow, uCol);
 
-		/*
 		if (nearestUC == null) { 				// there are no players/allys on the grid!
 			return randomDir ();
 		} else { 								// head towards the nearest player/ally
 			
 
 
+
+
 		}
-			
-		return Unit.Direction.LLeft;
-		*/
 		return randomDir ();
 	}
 
 
 
-	// USAGE: returns the nearest 'player'/'ally' to the given unit; otherwise, null
-	public Cell nearestUnitCell(Unit u){
+	// USAGE: returns Cell corresponding to the nearest 'player'/'ally' unit, relative to the 
+	// 		  given grid coordinates
+	public Cell nearestUnitCell(int unitRow, int unitCol){
 		// finds all 'player' and 'ally' units, if any
 		GameObject[] allPlayers = GameObject.FindGameObjectsWithTag("Player");
 		GameObject[] allAllys = GameObject.FindGameObjectsWithTag ("Allied");
@@ -96,8 +97,6 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 			return null;
 
 		// attempts to find nearest 'player'/'ally'unit
-		int uRow = u.currentCell.getRow();
-		int uCol = u.currentCell.getCol ();
 		Cell nearestU = null;
 		int evalH = -1;
 
@@ -106,7 +105,7 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 			Cell thisC = g.GetComponent<Unit> ().currentCell;
 
 			// thisH should be the # of moves it for AI-controlled unit to reach this 'player'/'ally' unit ... I think >.<
-			int thisH = Mathf.Abs((thisC.getRow () - uRow) + (thisC.getCol () - uCol));
+			int thisH = Mathf.Abs((thisC.getRow () - unitRow + (thisC.getCol () - unitCol)));
 
 			if (thisH > evalH) {
 				evalH = thisH;
@@ -115,15 +114,16 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 		}
 		return nearestU;
 	}
-		
+
+
 
 	// USAGE: returns a crude randomly-generated direction
 	// NOTE: use this in the case there are no player/ally units to head towards
 	// WARNING: not sure if this works :) please test!
 	public Unit.Direction randomDir(){
-		
-
-
+		Array dVals = Enum.GetValues (typeof(Unit.Direction));
+		Unit.Direction rDir = (Unit.Direction)dVals.GetValue (UnityEngine.Random.Range (0, dVals.Length));
+		return rDir;
 	}
 
 
@@ -168,6 +168,4 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 	public void wait() {
 		throw new NotImplementedException ();
 	}
-
-
 }
