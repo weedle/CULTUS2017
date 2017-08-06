@@ -10,6 +10,12 @@ public class TurnHandler : MonoBehaviour
     bool inProgress = false;
 
 
+	public void init()
+	{
+		allUnits = new List<Unit>();
+	}
+
+
 	// Update is called once per frame
 	void Update ()
     {
@@ -36,10 +42,7 @@ public class TurnHandler : MonoBehaviour
         }
     }
 
-    public void init()
-    {
-        allUnits = new List<Unit>();
-    }
+
 
     // add a new unit to the field
     public void addUnit(List<string> actions, bool isSelectable, Cell startCell, string unitName, Unit.Faction faction, Unit.Direction facing, int id)
@@ -49,6 +52,9 @@ public class TurnHandler : MonoBehaviour
 
         // the unit will set its proper name later
         GameObject newUnit = new GameObject("newUnit");
+
+		// adds appropriate tag in reference to the unit's faction
+		newUnit.tag = faction.ToString();
 
         // BoxCollider is needed to make this unit clickable
         if (isSelectable)

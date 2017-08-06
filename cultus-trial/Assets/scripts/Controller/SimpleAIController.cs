@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 
 // WARNING: this AI will "attack" in the style of a 'EnemyLawful' unit
@@ -60,18 +60,71 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 			done = true;
 			u.done = true;
 		}
-
 	}
 
 
 
 	// USAGE: returns best direction for unit to take to reach the nearest
 	// 		  'player'/'ally' unit
+	// NOTE: there is probably a better way to do this =.=|||
 	public Unit.Direction bestDir(Unit u){
-		return null; 						// FINISH THIS! //
+		Cell nearestUC = nearestUnitCell (u);
 
+		/*
+		if (nearestUC == null) { 				// there are no players/allys on the grid!
+			return randomDir ();
+		} else { 								// head towards the nearest player/ally
+			
+
+
+		}
+			
+		return Unit.Direction.LLeft;
+		*/
+		return randomDir ();
 	}
 
+
+
+	// USAGE: returns the nearest 'player'/'ally' to the given unit; otherwise, null
+	public Cell nearestUnitCell(Unit u){
+		// finds all 'player' and 'ally' units, if any
+		GameObject[] allPlayers = GameObject.FindGameObjectsWithTag("Player");
+		GameObject[] allAllys = GameObject.FindGameObjectsWithTag ("Allied");
+
+		if (allPlayers.Length == 0 && allAllys.Length == 0)
+			return null;
+
+		// attempts to find nearest 'player'/'ally'unit
+		int uRow = u.currentCell.getRow();
+		int uCol = u.currentCell.getCol ();
+		Cell nearestU = null;
+		int evalH = -1;
+
+		GameObject[] goodGuys = allPlayers.Concat (allAllys).ToArray ();
+		foreach (GameObject g in goodGuys) {
+			Cell thisC = g.GetComponent<Unit> ().currentCell;
+
+			// thisH should be the # of moves it for AI-controlled unit to reach this 'player'/'ally' unit ... I think >.<
+			int thisH = Mathf.Abs((thisC.getRow () - uRow) + (thisC.getCol () - uCol));
+
+			if (thisH > evalH) {
+				evalH = thisH;
+				nearestU = thisC;
+			}
+		}
+		return nearestU;
+	}
+		
+
+	// USAGE: returns a crude randomly-generated direction
+	// NOTE: use this in the case there are no player/ally units to head towards
+	// WARNING: not sure if this works :) please test!
+	public Unit.Direction randomDir(){
+		
+
+
+	}
 
 
 	// USAGE: if there is a nearby 'player'/'ally' unit, attack it
@@ -92,7 +145,6 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 				break;
 			}
 		}
-
 		return madeAttack;
 	}
 
@@ -109,10 +161,6 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 		}
 		return bestAttack;
 	}
-
-
-
-
 
 
 	// USAGE: it isn't necessary for an the AI to wait...

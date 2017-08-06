@@ -20,7 +20,7 @@ public class Grid : MonoBehaviour {
 			float xVal = r * -1 * Cell.xOffset;
 			float yVal = r * -1 * Cell.yOffset;
 			for (int i = 0; i < gridLayout.GetLength(1); i++) {
-				//print("current pos values: x = " + xVal + " , y = " + yVal);
+				// print("current pos values: x = " + xVal + " , y = " + yVal);
 				Cell currentCell = new Cell (1, new Vector3(xVal, yVal), r, i);
                 gridLayout[r,i] = currentCell;
 				xVal += Cell.xOffset;
@@ -127,7 +127,7 @@ public class Grid : MonoBehaviour {
 
 
 
-	// USAGE: 
+	// USAGE: returns a set of cells within the given range of the given position
     public HashSet<Cell> getCellsWithinRange(Cell startingPos, int n)
     {
         Dictionary<Cell, int> dictCells = addCellsWithinRangeRecursive(startingPos, n+1, new Dictionary<Cell, int>());

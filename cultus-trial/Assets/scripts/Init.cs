@@ -33,7 +33,7 @@ public class Init : MonoBehaviour {
         turnHandler.addUnit(actions, true, thisGrid[0, 0], "flammen", Unit.Faction.Player, Unit.Direction.LRight, 7);
 
         actions.Clear();
-        turnHandler.addUnit(actions, false, thisGrid[2, 2], "flammen", Unit.Faction.Allied, Unit.Direction.LLeft, 8);
+        turnHandler.addUnit(actions, false, thisGrid[2, 3], "flammen", Unit.Faction.Enemy, Unit.Direction.LLeft, 8);
         turnHandler.displayUnits();
         
 		// zooms into roughly the center cell of grid layout
