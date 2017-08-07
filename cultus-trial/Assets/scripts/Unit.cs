@@ -149,6 +149,7 @@ public class Unit : MonoBehaviour{
         Grid currentGrid = GameObject.Find ("grid").GetComponent<Grid> ();
 		Cell destCell = currentGrid.nextCell (currentCell, currentDir, n);
 		Vector3 newPos = destCell.getPos ();
+		Debug.Log (this.currentDir); 			// TESTING!!!
 
         if (destCell == currentCell)
             return;

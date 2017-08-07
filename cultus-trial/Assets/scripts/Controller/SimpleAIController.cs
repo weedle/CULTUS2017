@@ -7,12 +7,13 @@ using System.Linq;
 // WARNING: this AI will "attack" in the style of a 'EnemyLawful' unit
 // 		    (see Faction enum in Unit.cs)
 // WARNING: this AIcontroller is optimized for units with 'attacking' actions
+// 			in fact, it's pretty useless if the 'attached-to' unit has not attacking actions XD XD XD
 public class SimpleAIController : MonoBehaviour, IntfController {
 
 	Timer thisTimer;
 	private bool done = true;
 
-	// USAGE: see IntfController
+
 	public bool inProgress(){ 
 		return !done;
 	}
@@ -25,6 +26,7 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 		thisTimer = GameObject.Find ("GameLogic").GetComponent<Timer> ();
 		thisTimer.addTimer (unit.id); 
 	}
+
 
 
 	// USAGE: attempts to move current unit towards a 'player' unit, attacking if possible
@@ -48,7 +50,7 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 			
 			// at this point, either: 
 			// 		- there are no nearby 'player'/'ally' units
-			// 		- this unit has no 'attacking' actions
+			// 		- this unit has no 'attacking' actions, which is unfortunate (see topmost 'WARNING')
 			// >> unit will now attempt to move towards a 'player'/'ally' unit
 
 			u.rendToDirection (bestDir (u));
@@ -66,7 +68,6 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 
 	// USAGE: returns best direction for unit to take to reach the nearest
 	// 		  'player'/'ally' unit
-	// NOTE: there is probably a better way to do this =.= ... gomen T.T
 	public Unit.Direction bestDir(Unit u){
 		int uRow = u.currentCell.getRow();
 		int uCol = u.currentCell.getCol ();
@@ -76,14 +77,29 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 			return randomDir ();
 		} else { 								// head towards the nearest player/ally
 			
+			uRow = nearestUC.getRow () - uRow;
+			uCol = nearestUC.getCol () - uCol;
 
+			// essentially indicates which axes to move on, based on the largest absolute difference between
+			// the player/ally's position and the current unit's position
+			int dirIndicator = Math.Max (Math.Abs (uRow), Math.Abs (uCol));
 
-
-
+			if (dirIndicator == Math.Abs (uRow)) {  	// largest difference found in the (LLeft, URight) axis
+				if (uRow > 0) {
+					return Unit.Direction.LLeft;
+				} else {
+					return Unit.Direction.URight;
+				}
+			} else { 									// largest difference found in the (ULeft, LRight) axis
+				if (uCol > 0) {
+					return Unit.Direction.LRight;
+				} else {
+					return Unit.Direction.ULeft;
+				}
+			}
 		}
-		return randomDir ();
 	}
-
+		
 
 
 	// USAGE: returns Cell corresponding to the nearest 'player'/'ally' unit, relative to the 
@@ -98,7 +114,7 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 
 		// attempts to find nearest 'player'/'ally'unit
 		Cell nearestU = null;
-		int evalH = -1;
+		int evalH = 1000; 		// TODO: this is just a large random number; please update this with a more sensible value!
 
 		GameObject[] goodGuys = allPlayers.Concat (allAllys).ToArray ();
 		foreach (GameObject g in goodGuys) {
@@ -107,7 +123,7 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 			// thisH should be the # of moves it for AI-controlled unit to reach this 'player'/'ally' unit ... I think >.<
 			int thisH = Mathf.Abs((thisC.getRow () - unitRow + (thisC.getCol () - unitCol)));
 
-			if (thisH > evalH) {
+			if (thisH < evalH) {
 				evalH = thisH;
 				nearestU = thisC;
 			}
@@ -119,12 +135,12 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 
 	// USAGE: returns a crude randomly-generated direction
 	// NOTE: use this in the case there are no player/ally units to head towards
-	// WARNING: not sure if this works :) please test!
 	public Unit.Direction randomDir(){
 		Array dVals = Enum.GetValues (typeof(Unit.Direction));
 		Unit.Direction rDir = (Unit.Direction)dVals.GetValue (UnityEngine.Random.Range (0, dVals.Length));
 		return rDir;
 	}
+
 
 
 	// USAGE: if there is a nearby 'player'/'ally' unit, attack it
@@ -149,6 +165,7 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 	}
 
 
+
 	// USAGE: finds the attack action with the highest damage value, if such exists
 	public IntfActionModule findBestAttack(Unit u){
 		IntfActionModule[] allActions = u.GetComponents<IntfActionModule> ();
@@ -161,6 +178,7 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 		}
 		return bestAttack;
 	}
+
 
 
 	// USAGE: it isn't necessary for an the AI to wait...
