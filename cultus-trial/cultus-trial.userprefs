@@ -1,17 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\Controller\SimpleAIController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Grid.cs">
     <Files>
-      <File FileName="Assets\scripts\Controller\SimpleAIController.cs" Line="111" Column="30" />
-      <File FileName="Assets\scripts\Action\SinglePanelBasicAttack.cs" Line="1" Column="1" />
-      <File FileName="Assets\scripts\Grid.cs" Line="1" Column="1" />
-      <File FileName="Assets\scripts\Action\IntfActionModule.cs" Line="1" Column="1" />
-      <File FileName="Assets\scripts\Cell.cs" Line="1" Column="1" />
-      <File FileName="Assets\scripts\Action\JumpTestAction.cs" Line="1" Column="1" />
-      <File FileName="Assets\scripts\Unit.cs" Line="1" Column="1" />
-      <File FileName="Assets\scripts\Init.cs" Line="1" Column="1" />
-      <File FileName="Assets\scripts\TurnHandler.cs" Line="1" Column="1" />
-      <File FileName="Assets\scripts\Controller\RandomAIController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Controller\SimpleAIController.cs" Line="160" Column="35" />
+      <File FileName="Assets\Scripts\Controller\RandomAIController.cs" Line="45" Column="24" />
+      <File FileName="Assets\Scripts\Unit.cs" Line="166" Column="3" />
+      <File FileName="Assets\Scripts\TurnHandler.cs" Line="84" Column="14" />
+      <File FileName="Assets\Scripts\Action\SinglePanelBasicAttack.cs" Line="33" Column="29" />
+      <File FileName="Assets\Scripts\Init.cs" Line="37" Column="36" />
+      <File FileName="Assets\Scripts\Cell.cs" Line="39" Column="6" />
+      <File FileName="Assets\Scripts\Grid.cs" Line="152" Column="108" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

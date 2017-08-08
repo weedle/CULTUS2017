@@ -32,7 +32,7 @@ public class Init : MonoBehaviour {
         actions.Add("jumptest");
         turnHandler.addUnit(actions, true, thisGrid[0, 0], "flammen", Unit.Faction.Player, Unit.Direction.LRight, 7);
 
-        actions.Clear();
+        // actions.Clear(); 			// TESTING!!!
         turnHandler.addUnit(actions, false, thisGrid[2, 3], "flammen", Unit.Faction.Enemy, Unit.Direction.LLeft, 8);
         turnHandler.displayUnits();
         

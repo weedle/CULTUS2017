@@ -210,6 +210,7 @@ public class Unit : MonoBehaviour{
     public void takeDamage(int damage)
     {
         health -= damage;
+		Debug.Log ("Just got hit! " + this.unitName + " lost " + damage + " health!!!");
 		if (health <= 0) {
 			TurnHandler turnH = GameObject.Find ("GameLogic").GetComponent<TurnHandler> ();
 			turnH.removeUnit (unitName);

@@ -127,7 +127,7 @@ public class Grid : MonoBehaviour {
 
 
 
-	// USAGE: returns a set of cells within the given range of the given position
+	// USAGE: returns a set of cells within the given move range of the given position
     public HashSet<Cell> getCellsWithinRange(Cell startingPos, int n)
     {
         Dictionary<Cell, int> dictCells = addCellsWithinRangeRecursive(startingPos, n+1, new Dictionary<Cell, int>());
@@ -149,6 +149,7 @@ public class Grid : MonoBehaviour {
         this method allows us to avoid retreading the same
         path repeatedly
     */
+	// WARNING: this method will return a collection of cells that are UNOCCUPIED!!! (regardless of range 'n')
     Dictionary<Cell, int> addCellsWithinRangeRecursive(Cell pos, int n, Dictionary<Cell, int> cells)
     {
         if (n <= 0)

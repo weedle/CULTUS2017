@@ -39,9 +39,15 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 			return;
 
 		Grid currentGrid = GameObject.Find ("grid").GetComponent<Grid> ();
+
+		Cell[,] allCells = currentGrid.getLayout (); 			 							// TESTING!
+		Debug.Log("Last cell is occupied: " + allCells[0,6].getOccupied()); 				// TESTING!
+
 		HashSet<Cell> nearbyCells = currentGrid.getCellsWithinRange(u.currentCell, 1);
 
 		bool madeAttack = attackNearby (nearbyCells, u);
+		Debug.Log (madeAttack);
+
 
 		// checks if a successful attack was performed
 		if (madeAttack) { 	 			
@@ -114,7 +120,9 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 
 		// attempts to find nearest 'player'/'ally'unit
 		Cell nearestU = null;
-		int evalH = 1000; 		// TODO: this is just a large random number; please update this with a more sensible value!
+
+		// TODO: this is just a large random number; please change this appropriately!
+		int evalH = 1000;
 
 		GameObject[] goodGuys = allPlayers.Concat (allAllys).ToArray ();
 		foreach (GameObject g in goodGuys) {
@@ -148,13 +156,17 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 	public bool attackNearby(HashSet<Cell> nearbyCells, Unit u){
 		bool madeAttack = false;
 
+		Debug.Log ("There are " + nearbyCells.Count + " nearby cells!");
 		foreach (Cell c in nearbyCells){
 			if (!c.getOccupied ()) {
+				Debug.Log ("Cell at [" + c.getRow() + "," + c.getCol() + "] is not occupied...");
 				continue;
 			}
 
+			Debug.Log ("Got to line 165 in SimpleAIController");
 			Unit.Faction f = c.getUnit ().unitFaction;
-			if (f == Unit.Faction.Player || f == Unit.Faction.Allied) { 		// found a player / ally --> let's attack it!
+			if (f == Unit.Faction.Player || f == Unit.Faction.Allied) {  // found a player / ally --> let's attack it!
+				Debug.Log("Found a player/allied unit!");
 				IntfActionModule attack = findBestAttack (u);
 				attack.executeAction (u.currentCell, u.currentDir);
 				madeAttack = true;

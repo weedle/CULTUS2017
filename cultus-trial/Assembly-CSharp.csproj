@@ -46,27 +46,28 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Resources\Test.cs" />
-     <Compile Include="Assets\scripts\Action\IntfActionModule.cs" />
-     <Compile Include="Assets\scripts\Action\JumpTestAction.cs" />
-     <Compile Include="Assets\scripts\Action\SinglePanelBasicAttack.cs" />
-     <Compile Include="Assets\scripts\Cell.cs" />
-     <Compile Include="Assets\scripts\Controller\IntfController.cs" />
-     <Compile Include="Assets\scripts\Controller\ManualController.cs" />
-     <Compile Include="Assets\scripts\Controller\RandomAIController.cs" />
-     <Compile Include="Assets\scripts\Controller\SimpleAIController.cs" />
-     <Compile Include="Assets\scripts\Grid.cs" />
-     <Compile Include="Assets\scripts\Init.cs" />
-     <Compile Include="Assets\scripts\Menus\ActionMenu.cs" />
-     <Compile Include="Assets\scripts\Menus\Icons\ActionIcon.cs" />
-     <Compile Include="Assets\scripts\Menus\Icons\ItemIcon.cs" />
-     <Compile Include="Assets\scripts\Menus\Icons\WaitIcon.cs" />
-     <Compile Include="Assets\scripts\Menus\IntfMenu.cs" />
-     <Compile Include="Assets\scripts\Menus\IntfMenuItem.cs" />
-     <Compile Include="Assets\scripts\Menus\MainPop.cs" />
-     <Compile Include="Assets\scripts\Timer.cs" />
-     <Compile Include="Assets\scripts\TurnHandler.cs" />
-     <Compile Include="Assets\scripts\Unit.cs" />
-     <Compile Include="Assets\scripts\ValueIteration.cs" />
+     <Compile Include="Assets\Scripts\Action\IntfActionModule.cs" />
+     <Compile Include="Assets\Scripts\Action\JumpTestAction.cs" />
+     <Compile Include="Assets\Scripts\Action\SinglePanelBasicAttack.cs" />
+     <Compile Include="Assets\Scripts\Cell.cs" />
+     <Compile Include="Assets\Scripts\Controller\IntfController.cs" />
+     <Compile Include="Assets\Scripts\Controller\ManualController.cs" />
+     <Compile Include="Assets\Scripts\Controller\RandomAIController.cs" />
+     <Compile Include="Assets\Scripts\Controller\SimpleAIController.cs" />
+     <Compile Include="Assets\Scripts\Grid.cs" />
+     <Compile Include="Assets\Scripts\Init.cs" />
+     <Compile Include="Assets\Scripts\Menus\ActionMenu.cs" />
+     <Compile Include="Assets\Scripts\Menus\Icons\ActionIcon.cs" />
+     <Compile Include="Assets\Scripts\Menus\Icons\ItemIcon.cs" />
+     <Compile Include="Assets\Scripts\Menus\Icons\WaitIcon.cs" />
+     <Compile Include="Assets\Scripts\Menus\IntfMenu.cs" />
+     <Compile Include="Assets\Scripts\Menus\IntfMenuItem.cs" />
+     <Compile Include="Assets\Scripts\Menus\MainPop.cs" />
+     <Compile Include="Assets\Scripts\Timer.cs" />
+     <Compile Include="Assets\Scripts\TurnHandler.cs" />
+     <Compile Include="Assets\Scripts\UI\Victuuri.cs" />
+     <Compile Include="Assets\Scripts\Unit.cs" />
+     <Compile Include="Assets\Scripts\ValueIteration.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
