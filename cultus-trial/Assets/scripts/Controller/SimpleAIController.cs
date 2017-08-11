@@ -39,11 +39,16 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 			return;
 
 		Grid currentGrid = GameObject.Find ("grid").GetComponent<Grid> ();
+		Cell[,] allCells = currentGrid.getLayout (); 
 
-		Cell[,] allCells = currentGrid.getLayout (); 			 							// TESTING!
 		Debug.Log("Last cell is occupied: " + allCells[0,6].getOccupied()); 				// TESTING!
+		Debug.Log("There are " + allCells.GetLength(0) + " rows in this grid.");
 
-		HashSet<Cell> nearbyCells = currentGrid.getCellsWithinRange(u.currentCell, 1);
+		int uRow = u.currentCell.getRow ();
+		int uCol = u.currentCell.getCol ();
+
+		//HashSet<Cell> nearbyCells = checkNearby(uRow, uCol, allCells);
+		HashSet<Cell> nearbyCells = checkNearby(u.currentCell, currentGrid);
 
 		bool madeAttack = attackNearby (nearbyCells, u);
 		Debug.Log (madeAttack);
@@ -59,7 +64,7 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 			// 		- this unit has no 'attacking' actions, which is unfortunate (see topmost 'WARNING')
 			// >> unit will now attempt to move towards a 'player'/'ally' unit
 
-			u.rendToDirection (bestDir (u));
+			u.rendToDirection (bestDir (uRow, uCol, u));
 			u.moveUnit (1); 				
 		}
 
@@ -72,11 +77,10 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 
 
 
+
 	// USAGE: returns best direction for unit to take to reach the nearest
 	// 		  'player'/'ally' unit
-	public Unit.Direction bestDir(Unit u){
-		int uRow = u.currentCell.getRow();
-		int uCol = u.currentCell.getCol ();
+	public Unit.Direction bestDir(int uRow, int uCol, Unit u){
 		Cell nearestUC = nearestUnitCell (uRow, uCol);
 
 		if (nearestUC == null) { 				// there are no players/allys on the grid!
@@ -156,6 +160,9 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 	public bool attackNearby(HashSet<Cell> nearbyCells, Unit u){
 		bool madeAttack = false;
 
+		if (nearbyCells.Count == 0)
+			return madeAttack;
+
 		Debug.Log ("There are " + nearbyCells.Count + " nearby cells!");
 		foreach (Cell c in nearbyCells){
 			if (!c.getOccupied ()) {
@@ -174,6 +181,20 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 			}
 		}
 		return madeAttack;
+	}
+
+
+	// USAGE: returns all nearby cells relative to the unit
+	//  	: 'nearby' == 
+	public HashSet<Cell> checkNearby(Cell unitC, Grid g){
+		HashSet<Cell> allNearby = new HashSet<Cell> ();
+
+		allNearby.Add (g.nextCell (unitC, Unit.Direction.LLeft, 1));
+		allNearby.Add (g.nextCell (unitC, Unit.Direction.LRight, 1));
+		allNearby.Add (g.nextCell (unitC, Unit.Direction.ULeft, 1));
+		allNearby.Add (g.nextCell (unitC, Unit.Direction.URight, 1));
+
+		return allNearby;
 	}
 
 
