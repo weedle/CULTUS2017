@@ -41,32 +41,32 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 		Grid currentGrid = GameObject.Find ("grid").GetComponent<Grid> ();
 		Cell[,] allCells = currentGrid.getLayout (); 
 
-		Debug.Log("Last cell is occupied: " + allCells[0,6].getOccupied()); 				// TESTING!
-		Debug.Log("There are " + allCells.GetLength(0) + " rows in this grid.");
-
 		int uRow = u.currentCell.getRow ();
 		int uCol = u.currentCell.getCol ();
 
 		//HashSet<Cell> nearbyCells = checkNearby(uRow, uCol, allCells);
 		HashSet<Cell> nearbyCells = checkNearby(u.currentCell, currentGrid);
 
-		bool madeAttack = attackNearby (nearbyCells, u);
-		Debug.Log (madeAttack);
+        u.rendToDirection(bestDir(uRow, uCol, u));
+        bool madeAttack = attackNearby (nearbyCells, u);
 
 
 		// checks if a successful attack was performed
-		if (madeAttack) { 	 			
-			u.movesRemaining -= 1;
+		if (madeAttack)
+        {
+            u.movesRemaining -= 1;
 		} else {
-			
-			// at this point, either: 
-			// 		- there are no nearby 'player'/'ally' units
-			// 		- this unit has no 'attacking' actions, which is unfortunate (see topmost 'WARNING')
-			// >> unit will now attempt to move towards a 'player'/'ally' unit
 
-			u.rendToDirection (bestDir (uRow, uCol, u));
-			u.moveUnit (1); 				
-		}
+            // at this point, either: 
+            // 		- there are no nearby 'player'/'ally' units
+            // 		- this unit has no 'attacking' actions, which is unfortunate (see topmost 'WARNING')
+            // >> unit will now attempt to move towards a 'player'/'ally' unit
+
+            //u.rendToDirection (bestDir (uRow, uCol, u));
+            Cell next = GameObject.Find("grid").GetComponent<Grid>().
+                nextCell(u.currentCell, u.currentDir, 1);
+			u.moveUnit (1);
+        }
 
 		// turn ends if no moves remain
 		if (u.movesRemaining == 0) {
@@ -131,7 +131,7 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 		GameObject[] goodGuys = allPlayers.Concat (allAllys).ToArray ();
 		foreach (GameObject g in goodGuys) {
 			Cell thisC = g.GetComponent<Unit> ().currentCell;
-
+            
 			// thisH should be the # of moves it for AI-controlled unit to reach this 'player'/'ally' unit ... I think >.<
 			int thisH = Mathf.Abs((thisC.getRow () - unitRow + (thisC.getCol () - unitCol)));
 
@@ -163,17 +163,13 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 		if (nearbyCells.Count == 0)
 			return madeAttack;
 
-		Debug.Log ("There are " + nearbyCells.Count + " nearby cells!");
 		foreach (Cell c in nearbyCells){
 			if (!c.getOccupied ()) {
-				Debug.Log ("Cell at [" + c.getRow() + "," + c.getCol() + "] is not occupied...");
 				continue;
 			}
 
-			Debug.Log ("Got to line 165 in SimpleAIController");
 			Unit.Faction f = c.getUnit ().unitFaction;
 			if (f == Unit.Faction.Player || f == Unit.Faction.Allied) {  // found a player / ally --> let's attack it!
-				Debug.Log("Found a player/allied unit!");
 				IntfActionModule attack = findBestAttack (u);
 				attack.executeAction (u.currentCell, u.currentDir);
 				madeAttack = true;
@@ -193,6 +189,8 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 		allNearby.Add (g.nextCell (unitC, Unit.Direction.LRight, 1));
 		allNearby.Add (g.nextCell (unitC, Unit.Direction.ULeft, 1));
 		allNearby.Add (g.nextCell (unitC, Unit.Direction.URight, 1));
+
+        allNearby.RemoveWhere( x => ( x.getRow() == unitC.getRow() && x.getCol() == unitC.getCol()));
 
 		return allNearby;
 	}

@@ -28,7 +28,6 @@ public class SinglePanelBasicAttack : MonoBehaviour, IntfActionModule
     // USAGE: execute the action 
     public void executeAction(Cell position, Unit.Direction facing)
     {
-		Debug.Log ("action being executed!");
         HashSet<Unit> units = findTargetUnits(position, facing);
         if(units.Count != 0)
         {
