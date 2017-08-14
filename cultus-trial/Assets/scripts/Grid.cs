@@ -98,8 +98,10 @@ public class Grid : MonoBehaviour {
 
 		int row = currentCell.getRow ();
 		int col = currentCell.getCol ();
-		Cell nthCell = currentCell;			// returns currentCell if all else fails
-		int val = 0;
+		Cell nthCell = gridLayout[row, col];            // returns currentCell if all else fails
+        if (n == 0)
+            return nthCell;
+        int val = 0;
 
 		switch (dir)
         {

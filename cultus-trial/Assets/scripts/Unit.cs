@@ -83,7 +83,9 @@ public class Unit : MonoBehaviour{
 	// WARNING: this does NOT change the unit display !!!
 	public void changeCell(Cell newCell) {
 		if (!newCell.getOccupied ()) {
-			currentCell.unoccupy ();
+            GameObject.Find("grid").GetComponent<Grid>()
+                .nextCell(currentCell, Direction.LLeft, 0).unoccupy();
+            //currentCell.unoccupy ();
 			currentCell = newCell;
 			updatePos (newCell);
 			newCell.setUnit (this);		
@@ -149,7 +151,7 @@ public class Unit : MonoBehaviour{
         Grid currentGrid = GameObject.Find ("grid").GetComponent<Grid> ();
 		Cell destCell = currentGrid.nextCell (currentCell, currentDir, n);
 		Vector3 newPos = destCell.getPos ();
-		Debug.Log (this.currentDir); 			// TESTING!!!
+		//Debug.Log (this.currentDir); 			// TESTING!!!
 
         if (destCell == currentCell)
             return;

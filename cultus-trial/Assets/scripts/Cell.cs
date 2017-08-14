@@ -57,10 +57,10 @@ public class Cell {
     {
         if (isOccupied)
         {
+            Debug.Log("unoccupying cell at " + row + ":" + col + " " + Time.time.ToString());
             isOccupied = !isOccupied;
             currentUnit = null;
         }
-
     }
 
     // USAGE: when you want to set a new unit to an
