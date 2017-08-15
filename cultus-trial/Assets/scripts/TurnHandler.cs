@@ -45,7 +45,8 @@ public class TurnHandler : MonoBehaviour
 
 
     // add a new unit to the field
-    public void addUnit(List<string> actions, bool isSelectable, Cell startCell, string unitName, Unit.Faction faction, Unit.Direction facing, int id)
+    public void addUnit(List<string> actions, bool isSelectable, Cell startCell, string unitName, Unit.Faction faction, 
+		Unit.Direction facing, int id, List<Unit.Faction> enemyFactions)
     {
         if(allUnits == null)
             allUnits = new List<Unit>();
@@ -85,7 +86,7 @@ public class TurnHandler : MonoBehaviour
         }
 
         Unit unitComp = newUnit.AddComponent<Unit>();
-        unitComp.setUnit(startCell, facing, Unit.Faction.Player, unitName, id);
+        unitComp.setUnit(startCell, facing, Unit.Faction.Player, unitName, id, enemyFactions);
         startCell.setUnit(unitComp);
         allUnits.Add(unitComp);
     }

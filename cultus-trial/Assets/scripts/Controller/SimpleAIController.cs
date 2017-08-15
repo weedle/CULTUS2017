@@ -14,6 +14,7 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 	private bool done = true;
 
 
+	// USAGE: refer to IntfController
 	public bool inProgress(){ 
 		return !done;
 	}
@@ -44,7 +45,6 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 		int uRow = u.currentCell.getRow ();
 		int uCol = u.currentCell.getCol ();
 
-		//HashSet<Cell> nearbyCells = checkNearby(uRow, uCol, allCells);
 		HashSet<Cell> nearbyCells = checkNearby(u.currentCell, currentGrid);
 
         u.rendToDirection(bestDir(uRow, uCol, u));
@@ -62,7 +62,6 @@ public class SimpleAIController : MonoBehaviour, IntfController {
             // 		- this unit has no 'attacking' actions, which is unfortunate (see topmost 'WARNING')
             // >> unit will now attempt to move towards a 'player'/'ally' unit
 
-            //u.rendToDirection (bestDir (uRow, uCol, u));
             Cell next = GameObject.Find("grid").GetComponent<Grid>().
                 nextCell(u.currentCell, u.currentDir, 1);
 			u.moveUnit (1);
@@ -79,9 +78,9 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 
 
 	// USAGE: returns best direction for unit to take to reach the nearest
-	// 		  'player'/'ally' unit
+	// 		  enemy of the attached unit
 	public Unit.Direction bestDir(int uRow, int uCol, Unit u){
-		Cell nearestUC = nearestUnitCell (uRow, uCol);
+		Cell nearestUC = nearestUnitCell (uRow, uCol, u.enemyFactions);
 
 		if (nearestUC == null) { 				// there are no players/allys on the grid!
 			return randomDir ();
@@ -112,9 +111,14 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 		
 
 
-	// USAGE: returns Cell corresponding to the nearest 'player'/'ally' unit, relative to the 
+	// USAGE: returns Cell corresponding to a nearest enemy of the attached unit, relative to the 
 	// 		  given grid coordinates
-	public Cell nearestUnitCell(int unitRow, int unitCol){
+	public Cell nearestUnitCell(int unitRow, int unitCol, List<Unit.Faction> unitEnemies){
+		
+		foreach (Unit.Faction e in unitEnemies){
+			//TODO: finish this, Jenne-san!!! //
+		}
+
 		// finds all 'player' and 'ally' units, if any
 		GameObject[] allPlayers = GameObject.FindGameObjectsWithTag("Player");
 		GameObject[] allAllys = GameObject.FindGameObjectsWithTag ("Allied");
@@ -125,7 +129,7 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 		// attempts to find nearest 'player'/'ally'unit
 		Cell nearestU = null;
 
-		// TODO: this is just a large random number; please change this appropriately!
+		//TODO: this is just a large random number; please change this appropriately!
 		int evalH = 1000;
 
 		GameObject[] goodGuys = allPlayers.Concat (allAllys).ToArray ();
@@ -213,7 +217,7 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 
 
 	// USAGE: it isn't necessary for an the AI to wait...
-	// NOTE: an AI waits for no one!!! *DRAMATIC	MUSIC*
+	// NOTE: an AI waits for no one!!! *TRES TRES DRAMATIC MUSIC* ufufufufufu
 	public void wait() {
 		throw new NotImplementedException ();
 	}

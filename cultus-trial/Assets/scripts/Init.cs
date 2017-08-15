@@ -27,13 +27,18 @@ public class Init : MonoBehaviour {
         turnHandler.init();
         Cell[,] thisGrid = emptyGrid.getLayout ();
 
+
+		// NOTE: currently the player does not do anything with its list of enemy factions!
+		// 			(maybe this will change in the future?
+		List<Unit.Faction> playerEF = new List<Unit.Faction> (){ Unit.Faction.Enemy, Unit.Faction.IndepRogue };
         List<string> actions = new List<string>();
         actions.Add("singlepanelbasicattack");
         actions.Add("jumptest");
-        turnHandler.addUnit(actions, true, thisGrid[0, 0], "flammen", Unit.Faction.Player, Unit.Direction.LRight, 7);
+        turnHandler.addUnit(actions, true, thisGrid[0, 0], "flammen", Unit.Faction.Player, Unit.Direction.LRight, 7, playerEF);
 
         // actions.Clear(); 			// TESTING!!!
-        turnHandler.addUnit(actions, false, thisGrid[2, 3], "flammen", Unit.Faction.Enemy, Unit.Direction.LLeft, 8);
+		List<Unit.Faction> enemyEF = new List<Unit.Faction>() { Unit.Faction.Player, Unit.Faction.IndepRogue };
+        turnHandler.addUnit(actions, false, thisGrid[2, 3], "flammen", Unit.Faction.Enemy, Unit.Direction.LLeft, 8, enemyEF);
         turnHandler.displayUnits();
         
 		// zooms into roughly the center cell of grid layout
@@ -46,7 +51,7 @@ public class Init : MonoBehaviour {
     // 		 later we can modify this class to keep track of the
     //			'currently-selected-unit' and only that one can move
     //			at a particular time
-    void Update()
+    void Update() 
     {
 
     }

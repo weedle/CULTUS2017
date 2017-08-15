@@ -12,6 +12,7 @@ public class Unit : MonoBehaviour{
     public string unitName;
     public int id;
     public Faction unitFaction;
+	public List<Faction> enemyFactions; 		// this is new!
 	public Vector3 currentPos;
     public Direction currentDir;
     public Cell currentCell;
@@ -21,11 +22,7 @@ public class Unit : MonoBehaviour{
 	public bool canAct = true;
     public int health = 100;
 
-    // NOTE: values current chosen based on what seems to look
-    //			right to J-san
-    //float xCellOffset = -0.03f;
-    //float yCellOffset = 0.12f;
-    // NOTE: K-sama messed with things and updated offset values
+    // NOTE: K-sama messed with things and updated offset values, yay!
     float xCellOffset = 0.03f;
     float yCellOffset = 0.24f;
 	float xMenuOffset = -0.70f;
@@ -34,12 +31,13 @@ public class Unit : MonoBehaviour{
 
     // setUnit sets the internal state of this unit, and then calls displayUnit
     // to reflect that in the game screen
-    public void setUnit(Cell cell, Direction dir, Faction faction, string name, int id) {
+    public void setUnit(Cell cell, Direction dir, Faction faction, string name, int id, List<Faction> enemyFactions) {
 		updatePos (cell);  
 		this.currentDir = dir;
 		unitName = name;
         unitFaction = faction;
 		this.id = id;
+		this.enemyFactions = enemyFactions;
 		cell.setUnit (this);
 		currentCell = cell;
 		displayUnit ();
