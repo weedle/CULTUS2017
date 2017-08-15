@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-// WARNING: this AI will "attack" in the style of a 'EnemyLawful' unit
-// 		    (see Faction enum in Unit.cs)
 // WARNING: this AIcontroller is optimized for units with 'attacking' actions
 // 			in fact, it's pretty useless if the 'attached-to' unit has not attacking actions XD XD XD
 public class SimpleAIController : MonoBehaviour, IntfController {
@@ -58,9 +56,9 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 		} else {
 
             // at this point, either: 
-            // 		- there are no nearby 'player'/'ally' units
+            // 		- there are no nearby enemy units
             // 		- this unit has no 'attacking' actions, which is unfortunate (see topmost 'WARNING')
-            // >> unit will now attempt to move towards a 'player'/'ally' unit
+            // >> unit will now attempt to move towards a enemy unit
 
             Cell next = GameObject.Find("grid").GetComponent<Grid>().
                 nextCell(u.currentCell, u.currentDir, 1);
@@ -82,15 +80,15 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 	public Unit.Direction bestDir(int uRow, int uCol, Unit u){
 		Cell nearestUC = nearestUnitCell (uRow, uCol, u.enemyFactions);
 
-		if (nearestUC == null) { 				// there are no players/allys on the grid!
+		if (nearestUC == null) { 				// there are no enemies on the grid!
 			return randomDir ();
-		} else { 								// head towards the nearest player/ally
+		} else { 								// head towards the nearest enemy
 			
 			uRow = nearestUC.getRow () - uRow;
 			uCol = nearestUC.getCol () - uCol;
 
 			// essentially indicates which axes to move on, based on the largest absolute difference between
-			// the player/ally's position and the current unit's position
+			// the enemy's position and the attached unit's position
 			int dirIndicator = Math.Max (Math.Abs (uRow), Math.Abs (uCol));
 
 			if (dirIndicator == Math.Abs (uRow)) {  	// largest difference found in the (LLeft, URight) axis
@@ -114,29 +112,31 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 	// USAGE: returns Cell corresponding to a nearest enemy of the attached unit, relative to the 
 	// 		  given grid coordinates
 	public Cell nearestUnitCell(int unitRow, int unitCol, List<Unit.Faction> unitEnemies){
-		
+
+		var listAllEnemies = new List<GameObject> ();
+
+		// finds all GameObjects tagged with a faction that is an enemy of the attached unit
 		foreach (Unit.Faction e in unitEnemies){
-			//TODO: finish this, Jenne-san!!! //
+			foreach (GameObject g in GameObject.FindGameObjectsWithTag(e.ToString())) {
+				listAllEnemies.Add (g);
+			}
 		}
 
-		// finds all 'player' and 'ally' units, if any
-		GameObject[] allPlayers = GameObject.FindGameObjectsWithTag("Player");
-		GameObject[] allAllys = GameObject.FindGameObjectsWithTag ("Allied");
+		GameObject[] arrayAllEnemies = listAllEnemies.ToArray ();
 
-		if (allPlayers.Length == 0 && allAllys.Length == 0)
+		if (arrayAllEnemies.Length == 0)
 			return null;
 
-		// attempts to find nearest 'player'/'ally'unit
 		Cell nearestU = null;
 
 		//TODO: this is just a large random number; please change this appropriately!
 		int evalH = 1000;
 
-		GameObject[] goodGuys = allPlayers.Concat (allAllys).ToArray ();
-		foreach (GameObject g in goodGuys) {
+		// attempts to find nearest enemy of the attached unit
+		foreach (GameObject g in arrayAllEnemies) {
 			Cell thisC = g.GetComponent<Unit> ().currentCell;
             
-			// thisH should be the # of moves it for AI-controlled unit to reach this 'player'/'ally' unit ... I think >.<
+			// thisH should be the # of moves it for AI-controlled unit to reach this enemy unit ... I think >.<
 			int thisH = Mathf.Abs((thisC.getRow () - unitRow + (thisC.getCol () - unitCol)));
 
 			if (thisH < evalH) {
@@ -150,7 +150,7 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 
 
 	// USAGE: returns a crude randomly-generated direction
-	// NOTE: use this in the case there are no player/ally units to head towards
+	// NOTE: use this in the case there are no enemy units to head towards
 	public Unit.Direction randomDir(){
 		Array dVals = Enum.GetValues (typeof(Unit.Direction));
 		Unit.Direction rDir = (Unit.Direction)dVals.GetValue (UnityEngine.Random.Range (0, dVals.Length));
@@ -159,7 +159,7 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 
 
 
-	// USAGE: if there is a nearby 'player'/'ally' unit, attack it
+	// USAGE: if there is a nearby enemy of the attached unit, attack it
 	// 		  return true if there was a successful attack
 	public bool attackNearby(HashSet<Cell> nearbyCells, Unit u){
 		bool madeAttack = false;
@@ -173,7 +173,7 @@ public class SimpleAIController : MonoBehaviour, IntfController {
 			}
 
 			Unit.Faction f = c.getUnit ().unitFaction;
-			if (f == Unit.Faction.Player || f == Unit.Faction.Allied) {  // found a player / ally --> let's attack it!
+			if (f == Unit.Faction.Player || f == Unit.Faction.Allied) {  // found an enemy --> let's attack it!
 				IntfActionModule attack = findBestAttack (u);
 				attack.executeAction (u.currentCell, u.currentDir);
 				madeAttack = true;
