@@ -33,10 +33,12 @@ public class TurnHandler : MonoBehaviour
 
         // if the unit is done, please request the next
         // unit to move
+
+        // NEED TO HANDLE UNIt BEING DEAD HERE
         if (allUnits[unitIndex].done == true)
         {
             unitIndex++;
-            if (unitIndex >= 2)
+            if (unitIndex >= allUnits.Count)
                 unitIndex = 0;
             inProgress = false;
         }
@@ -106,7 +108,7 @@ public class TurnHandler : MonoBehaviour
     }
 
 	// USAGE: removes unit with specified name from allUnits, if such exists
-	// NOTE: in case of duplicates, it will only elimante the "first" one
+	// NOTE: in case of duplicates, it will only eliminate the "first" one
 	public void removeUnit(string unitName)
 	{
 		foreach (Unit u in allUnits){
@@ -116,4 +118,38 @@ public class TurnHandler : MonoBehaviour
 			}
 		}
 	}
+
+    //on unit death, call this function so we can check the game status
+    // method impl: go through all units on field, and check their faction
+    // if all enemies are dead, call victory
+    // if we want to have other win conditions, this is where we'd start
+    // note that if there are other win conditions, we need to add extra 
+    // calls to checkGameStatus
+    public void checkGameStatus()
+    {
+        bool allGood = true;
+        bool allEvil = true;
+        foreach (Unit unit in allUnits)
+        {
+            if (unit.unitFaction == Unit.Faction.Enemy)
+            {
+                allGood = false;
+            }
+            if (unit.unitFaction == Unit.Faction.Player ||
+                unit.unitFaction == Unit.Faction.Allied)
+            {
+                allEvil = false;
+            }
+        }
+
+        if(allGood)
+        {
+            Debug.Log("alll units are good, call victory scene");
+        }
+
+        if (allEvil)
+        {
+            Debug.Log("alll units are bad, call lose scene");
+        }
+    }
 }

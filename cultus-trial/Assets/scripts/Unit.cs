@@ -214,6 +214,7 @@ public class Unit : MonoBehaviour{
 		if (health <= 0) {
 			TurnHandler turnH = GameObject.Find ("GameLogic").GetComponent<TurnHandler> ();
 			turnH.removeUnit (unitName);
+            turnH.checkGameStatus();
 			Destroy (gameObject);
 		}
     }
