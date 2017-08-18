@@ -8,7 +8,7 @@ using System.Collections.Generic;
 public class SinglePanelBasicAttack : MonoBehaviour, IntfActionModule
 {
 	private string actionName = "smack";
-	private int attackDamage = 5;
+	public int attackDamage = 5;
 
 	// USAGE: see IntfActionModule
 	public int isAttack(){

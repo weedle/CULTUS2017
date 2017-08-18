@@ -218,13 +218,19 @@ public class Grid : MonoBehaviour {
     {
 
         HashSet<Cell> targetCells = action.findTargetCells(unit.currentCell, unit.currentDir);
-        if (action.findTargetUnits(unit.currentCell, unit.currentDir).Count == 0)
+        HashSet<Cell> occupiedCells = new HashSet<Cell>();
+        HashSet<Cell> unoccupiedCells = new HashSet<Cell>();
+
+        foreach(Cell cell in targetCells)
         {
-            highlightCells(targetCells, (Sprite)Resources.Load<Sprite>("sprites/attackMarker"));
+            if (cell.getOccupied())
+                occupiedCells.Add(cell);
+            else
+                unoccupiedCells.Add(cell);
         }
-        else
-        {
-            highlightCells(targetCells, (Sprite)Resources.Load<Sprite>("sprites/highlightMarker"));
-        }
+
+        highlightCells(occupiedCells, (Sprite)Resources.Load<Sprite>("sprites/highlightMarker"));
+        highlightCells(unoccupiedCells, (Sprite)Resources.Load<Sprite>("sprites/attackMarker"));
+
     }
 }

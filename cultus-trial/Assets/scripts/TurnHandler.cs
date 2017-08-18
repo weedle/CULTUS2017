@@ -96,6 +96,9 @@ public class TurnHandler : MonoBehaviour
                 case "singlepanelbasicattack":
                     newUnit.AddComponent<SinglePanelBasicAttack>();
                     break;
+                case "smacknearby":
+                    newUnit.AddComponent<SmackNearby>();
+                    break;
                 case "jumptest":
                     newUnit.AddComponent<JumpTestAction>();
                     break;

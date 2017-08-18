@@ -33,8 +33,11 @@ public class Init : MonoBehaviour {
 		List<Unit.Faction> playerEF = new List<Unit.Faction> (){ Unit.Faction.Enemy, Unit.Faction.IndepRogue };
         List<string> actions = new List<string>();
         actions.Add("singlepanelbasicattack");
+        actions.Add("smacknearby");
         actions.Add("jumptest");
         turnHandler.addUnit(actions, true, thisGrid[0, 0], "flammen", Unit.Faction.Player, Unit.Direction.LRight, 7, playerEF);
+
+        actions.Remove("smacknearby");
 
         // actions.Clear(); 			// TESTING!!!
 		List<Unit.Faction> enemyEF = new List<Unit.Faction>() { Unit.Faction.Player, Unit.Faction.IndepRogue };

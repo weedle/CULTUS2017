@@ -50,6 +50,12 @@ public class ActionMenu : MonoBehaviour, IntfMenu
                 item.GetComponent<UnityEngine.UI.Button>()
                     .onClick.AddListener(smack);
                 break;
+            case "smacknearby":
+                item.GetComponent<UnityEngine.UI.Button>().onClick.RemoveAllListeners();
+                item.GetComponent<UnityEngine.UI.Image>().raycastTarget = false;
+                item.GetComponent<UnityEngine.UI.Button>()
+                    .onClick.AddListener(smacknearby);
+                break;
         }
         objects.Add(item);
     }
@@ -83,6 +89,11 @@ public class ActionMenu : MonoBehaviour, IntfMenu
     public void smack()
     {
         highlightOrExecute(typeof(SinglePanelBasicAttack));
+    }
+
+    public void smacknearby()
+    {
+        highlightOrExecute(typeof(SmackNearby));
     }
 
     // This function will take a type of action, and highlight

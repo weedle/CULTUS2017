@@ -1,2 +1,4 @@
 *.meta
 cultus-trial/Library/*
+cultus-trial/.vs/cultus-trial/v14/.suo
+cultus-trial/cultus-trial.csproj
