@@ -63,7 +63,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Resources\Test.cs" />
     <Compile Include="Assets\scripts\Action\IntfActionModule.cs" />
+    <Compile Include="Assets\scripts\Action\JumpTestAction.cs" />
     <Compile Include="Assets\scripts\Action\SinglePanelBasicAttack.cs" />
     <Compile Include="Assets\scripts\Cell.cs" />
     <Compile Include="Assets\scripts\Controller\IntfController.cs" />
@@ -72,10 +74,16 @@
     <Compile Include="Assets\scripts\Controller\SimpleAIController.cs" />
     <Compile Include="Assets\scripts\Grid.cs" />
     <Compile Include="Assets\scripts\Init.cs" />
+    <Compile Include="Assets\scripts\Menus\ActionMenu.cs" />
+    <Compile Include="Assets\scripts\Menus\Icons\ActionIcon.cs" />
+    <Compile Include="Assets\scripts\Menus\Icons\ItemIcon.cs" />
     <Compile Include="Assets\scripts\Menus\Icons\WaitIcon.cs" />
     <Compile Include="Assets\scripts\Menus\IntfMenu.cs" />
     <Compile Include="Assets\scripts\Menus\IntfMenuItem.cs" />
+    <Compile Include="Assets\scripts\Menus\MainPop.cs" />
     <Compile Include="Assets\scripts\Timer.cs" />
+    <Compile Include="Assets\scripts\TurnHandler.cs" />
+    <Compile Include="Assets\scripts\UI\Victuuri.cs" />
     <Compile Include="Assets\scripts\Unit.cs" />
     <Compile Include="Assets\scripts\ValueIteration.cs" />
   </ItemGroup>
