@@ -7,6 +7,7 @@ public class TurnHandler : MonoBehaviour
     // this guy keeps track of all units in play
     private List<Unit> allUnits;
     int unitIndex = 0;
+    bool death = false;
     bool inProgress = false;
 
 
@@ -31,10 +32,23 @@ public class TurnHandler : MonoBehaviour
             inProgress = true;
         }
 
+        // If the unit we're in control of dies, we do not increase unitIndex
+        // if we're on the last unit, index goes to 0
+        if (death)
+        {
+            if (unitIndex >= allUnits.Count)
+                unitIndex = 0;
+            if (allUnits[unitIndex].done == true)
+            {
+                unitIndex++;
+                if (unitIndex >= allUnits.Count)
+                    unitIndex = 0;
+                inProgress = false;
+            }
+        }
+
         // if the unit is done, please request the next
         // unit to move
-
-        // NEED TO HANDLE UNIt BEING DEAD HERE
         if (allUnits[unitIndex].done == true)
         {
             unitIndex++;
@@ -42,6 +56,7 @@ public class TurnHandler : MonoBehaviour
                 unitIndex = 0;
             inProgress = false;
         }
+        death = false;
     }
 
 
@@ -114,6 +129,7 @@ public class TurnHandler : MonoBehaviour
 		foreach (Unit u in allUnits){
 			if (u.unitName == unitName) {
 				allUnits.Remove (u);
+                death = true;
 				return;
 			}
 		}
@@ -151,5 +167,7 @@ public class TurnHandler : MonoBehaviour
         {
             Debug.Log("alll units are bad, call lose scene");
         }
+
+        this.enabled = false;
     }
 }
