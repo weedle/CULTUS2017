@@ -23,6 +23,17 @@ public class Cell {
         this.col = col;
     }
 
+	// USAGE: introducing some new tile types to make the grid more interesting! FEEL FREE TO MODIFY !!!
+	// NOTE:
+	// 	- Stairs : entry + exit tiles used to move between adjacent floors
+	// 	- Portal : entry + exit tiles used to move between other Portal tiles (within / between floors)
+	// 	- Hazard : dangerous tiles that drains health!
+	//	- Spawner : tiles where enemies can spawn from!
+	public enum TileType{
+		Stairs, Portal, Hazard, Spawner
+	}
+		
+
     public int getTileType()
     {
         return tileType;

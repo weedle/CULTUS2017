@@ -4,14 +4,20 @@ using System.Collections.Generic;
 
 public class Grid : MonoBehaviour {
     public bool isVirtual = false;
+	public int floor;									// WARNING: floors are 0-indexed !!!
+
     Cell[,] gridLayout;
     GameObject[,] cellObjects = new GameObject[5, 10];
 
-	public Grid() {
-		Console.Write("Huh, so you made a new grid, I think...");
+	// USAGE: this is currently unused !!!
+	public Grid(int floor) {
+		this.floor = floor;
+		Console.Write ("You made a grid, brah! What pizzazz!");
 	}
+		
 
 	// NOTE: the current grid layout is hard-coded for now =.=
+	// WARNING: will be revamped pretty soon! YAY!
 	public void makeGrid() {
         gridLayout = new Cell[5,10];
 

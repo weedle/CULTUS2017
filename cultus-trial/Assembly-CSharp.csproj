@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\Action\IntfActionModule.cs" />
      <Compile Include="Assets\Scripts\Action\JumpTestAction.cs" />
      <Compile Include="Assets\Scripts\Action\SinglePanelBasicAttack.cs" />
+     <Compile Include="Assets\Scripts\Action\SmackNearby.cs" />
      <Compile Include="Assets\Scripts\Cell.cs" />
      <Compile Include="Assets\Scripts\Controller\IntfController.cs" />
      <Compile Include="Assets\Scripts\Controller\ManualController.cs" />
@@ -56,6 +57,7 @@
      <Compile Include="Assets\Scripts\Controller\SimpleAIController.cs" />
      <Compile Include="Assets\Scripts\Grid.cs" />
      <Compile Include="Assets\Scripts\Init.cs" />
+     <Compile Include="Assets\Scripts\Level.cs" />
      <Compile Include="Assets\Scripts\Menus\ActionMenu.cs" />
      <Compile Include="Assets\Scripts\Menus\Icons\ActionIcon.cs" />
      <Compile Include="Assets\Scripts\Menus\Icons\ItemIcon.cs" />
@@ -63,9 +65,9 @@
      <Compile Include="Assets\Scripts\Menus\IntfMenu.cs" />
      <Compile Include="Assets\Scripts\Menus\IntfMenuItem.cs" />
      <Compile Include="Assets\Scripts\Menus\MainPop.cs" />
+     <Compile Include="Assets\Scripts\Menus\UI\Victuuri.cs" />
      <Compile Include="Assets\Scripts\Timer.cs" />
      <Compile Include="Assets\Scripts\TurnHandler.cs" />
-     <Compile Include="Assets\Scripts\UI\Victuuri.cs" />
      <Compile Include="Assets\Scripts\Unit.cs" />
      <Compile Include="Assets\Scripts\ValueIteration.cs" />
  <Reference Include="UnityEngine.UI">
