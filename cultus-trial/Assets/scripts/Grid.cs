@@ -27,7 +27,7 @@ public class Grid : MonoBehaviour {
 			float yVal = r * -1 * Cell.yOffset;
 			for (int i = 0; i < gridLayout.GetLength(1); i++) {
 				// print("current pos values: x = " + xVal + " , y = " + yVal);
-				Cell currentCell = new Cell (1, new Vector3(xVal, yVal), r, i);
+				Cell currentCell = new Cell (Cell.TileType.Default, new Vector3(xVal, yVal), r, i);
                 gridLayout[r,i] = currentCell;
 				xVal += Cell.xOffset;
 				yVal -= Cell.yOffset;

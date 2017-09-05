@@ -36,7 +36,6 @@ public class Init : MonoBehaviour {
         actions.Add("smacknearby");
         actions.Add("jumptest");
         turnHandler.addUnit(actions, true, thisGrid[0, 0], "flammen", Unit.Faction.Player, Unit.Direction.LRight, 7, playerEF);
-
         actions.Remove("smacknearby");
 
         // actions.Clear(); 			// TESTING!!!

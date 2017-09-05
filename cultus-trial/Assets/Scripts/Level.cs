@@ -3,18 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
+using System;
 
 // Structure Terminology
 // 	- a 'level' refers to usual sense of a level; specifies the different units, bosses, level map, etc.
 // 	- a 'map' refers to the dungeon layout; specifies grid / dungeon layout
 //  - a 'grid' refers to a physical "level" / layer of the dungeon layout; specifies a 2D array of cells of a certain height
 public class Level : MonoBehaviour {
-	public string levelName { get; }
+	public string levelName;
 	private string path;
 	public Level.LevelType type;
 
-	private List<Unit> allEnemies;
 	private List<Unit> allAllies;
+	private List<Unit> allEnemies;
 	private List<Grid> allGrids;
 
 	// NOTE: currently unused!
@@ -37,11 +38,18 @@ public class Level : MonoBehaviour {
 	public int floorCount(){
 		return allGrids.Count;
 	}
+
+	// USAGE: return level name
+	public string getLevelName(){
+		return levelName;
+	}
 		
-	// USAGE: parsing 'Level'-related details from XML
+	// USAGE: parses 'Level'-related details from XML
 	// WARNING: after a 'Level' object has been parsed from a particular file, it CANNOT be
 	// 			reparsed from a different file !!!
-	public void levelParser(string filepath){
+	public void levelDeserialize(string filepath){
+
+		// minor mod to convert filepath (relative) to an absolute path
 
 		// a few helpful message printouts
 		if (path != filepath) {
@@ -54,25 +62,17 @@ public class Level : MonoBehaviour {
 			path = filepath;
 		}
 
-		// the real parsing action begins!
+		// starting that real deserializing action!
 		XmlDocument doc = new XmlDocument ();
 		doc.Load (filepath);
 
+		// basic Level info
 		XmlNode currentNode = doc.SelectSingleNode ("level");
 		levelName = currentNode.Attributes ["levelName"].InnerText;
-		type = currentNode.Attributes ["type"].InnerText;
+		var temp = currentNode.Attributes ["type"].InnerText;
+		type = (Level.LevelType) Enum.Parse (typeof(Level.LevelType), temp);
 
 
 	}
-
-
-
-
-
-
-
-
-
-
 
 }

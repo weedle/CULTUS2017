@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Cell {
     private bool isOccupied;
-    int tileType;
+	Cell.TileType tileType;
     Vector3 currentPos;
     Unit currentUnit;
     private int row;
@@ -13,7 +13,7 @@ public class Cell {
     public static float yOffset = 0.5f;
     
     // NOTE: a NULL UNIT is assigned to Cell upon construction
-    public Cell(int type, Vector3 position, int row, int col)
+	public Cell(Cell.TileType type, Vector3 position, int row, int col)
     {
         tileType = type;
         isOccupied = false;
@@ -29,12 +29,13 @@ public class Cell {
 	// 	- Portal : entry + exit tiles used to move between other Portal tiles (within / between floors)
 	// 	- Hazard : dangerous tiles that drains health!
 	//	- Spawner : tiles where enemies can spawn from!
+	// 	- Default : nothing too special about this tile XD
 	public enum TileType{
-		Stairs, Portal, Hazard, Spawner
+		Stairs, Portal, Hazard, Spawner, Default
 	}
 		
 
-    public int getTileType()
+	public Cell.TileType getTileType()
     {
         return tileType;
     }

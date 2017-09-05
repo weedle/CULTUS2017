@@ -1,11 +1,57 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 
 <level levelName="Omega" type="Tutorial">
-	
+	<map>
+		<unitpath>/Data/omegaUnits</unitpath>
 
+		<grid floor="0">
+			
+		</grid>
+		<grid floor="1">
+		
+		</grid>
+	</map>
 
+	<allunits>
+		<unitlist floor="0" type="Allies">
+			<unit>
+				<name>flammen</name>
+				<id>7</id>
+				<position>0,0</position>
+				<direction>LRight</direction>
+				<faction>Player</faction>
+				<enemyfactions>
+					<faction>Enemy</faction>
+					<faction>IndepRogue</faction>
+				</enemyfactions>
 
+				<actionlist>
+					<action>singlepannelbasicattack</action>
+					<action>smacknearby</action>
+					<action>jumptest</action>
+				</actionlist>
+			</unit>
+		</unitlist>
 
+		<unitlist floor="0" type="Enemies">
+			<unit>
+				<name>flammen</name>
+				<id>8</id>
+				<position>2,3</position>
+				<direction>LLeft</direction>
+				<faction>Enemy</faction>
+				<enemyfactions>
+					<faction>Player</faction>
+					<faction>IndepRogue</faction>
+				</enemyfactions>
 
+				<actionlist>
+					<action>singlepannelbasicattack</action>
+					<action>smacknearby</action>
+					<action>jumptest</action>
+				</actionlist>
+			</unit>
+		</unitlist>
+	</allunits>
 </level>
 
