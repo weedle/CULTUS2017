@@ -2,11 +2,13 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Level.cs">
     <Files>
-      <File FileName="Assets\Scripts\Grid.cs" Line="7" Column="24" />
-      <File FileName="Assets\Scripts\Cell.cs" Line="14" Column="5" />
-      <File FileName="Assets\Scripts\Init.cs" Line="46" Column="9" />
-      <File FileName="Assets\Scripts\Unit.cs" Line="79" Column="2" />
-      <File FileName="Assets\Scripts\Level.cs" Line="6" Column="1" />
+      <File FileName="Assets\Scripts\Grid.cs" Line="92" Column="2" />
+      <File FileName="Assets\Scripts\Cell.cs" Line="90" Column="26" />
+      <File FileName="Assets\Scripts\Init.cs" Line="19" Column="3" />
+      <File FileName="Assets\Scripts\Unit.cs" Line="16" Column="28" />
+      <File FileName="Assets\Scripts\Level.cs" Line="57" Column="37" />
+      <File FileName="Assets\Data\omegaLevel.xml" Line="4" Column="2" />
+      <File FileName="Assets\Data\omegaUnits.xml" Line="3" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

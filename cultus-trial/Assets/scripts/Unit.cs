@@ -83,7 +83,6 @@ public class Unit : MonoBehaviour{
 		if (!newCell.getOccupied ()) {
             GameObject.Find("grid").GetComponent<Grid>()
                 .nextCell(currentCell, Direction.LLeft, 0).unoccupy();
-            //currentCell.unoccupy ();
 			currentCell = newCell;
 			updatePos (newCell);
 			newCell.setUnit (this);		
